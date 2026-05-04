@@ -8,17 +8,18 @@ import {
     Mail, 
     Calendar, 
     MessageSquare, 
-    Send,
     Loader2,
     AlertCircle,
     CheckCircle,
-    Clock
+    Clock,
+    Copy,
+    Check
 } from 'lucide-react';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
 import TaskStatusBadge from '@/components/TaskStatusBadge';
 import MeetingScheduler from '@/components/MeetingScheduler';
-import { getLeadDetails, sendWhatsAppMessage, LeadDetails } from '../../services/leadsService';
+import { getLeadDetails, LeadDetails } from '../../services/leadsService';
 import { getTasks, Task } from '../../services/tasksService';
 import { createCalendarMeeting } from '../../services/calendarService';
 import { formatDate } from '@/lib/utils';
@@ -33,11 +34,7 @@ export default function LeadDetailsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     
-    // Message form state
-    const [message, setMessage] = useState('');
-    const [sending, setSending] = useState(false);
-    const [sendError, setSendError] = useState<string | null>(null);
-    const [sendSuccess, setSendSuccess] = useState(false);
+    const [copiedField, setCopiedField] = useState<string | null>(null);
 
     // Tasks state
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -47,6 +44,12 @@ export default function LeadDetailsPage() {
     const [isScheduling, setIsScheduling] = useState(false);
     const [meetingError, setMeetingError] = useState<string | null>(null);
     const [meetingLink, setMeetingLink] = useState<string | null>(null);
+
+    const copyToClipboard = (text: string, field: string) => {
+        navigator.clipboard.writeText(text);
+        setCopiedField(field);
+        setTimeout(() => setCopiedField(null), 2000);
+    };
 
     // Fetch lead details and tasks
     useEffect(() => {
@@ -81,40 +84,6 @@ export default function LeadDetailsPage() {
             fetchTasks();
         }
     }, [leadId]);
-
-    // Send WhatsApp message
-    const handleSendMessage = async (e: React.FormEvent) => {
-        e.preventDefault();
-        
-        if (!message.trim() || !lead) return;
-
-        try {
-            setSending(true);
-            setSendError(null);
-            setSendSuccess(false);
-
-            await sendWhatsAppMessage({
-                leadId: lead.id,
-                phone: lead.phone,
-                message: message.trim()
-            });
-
-            setSendSuccess(true);
-            setMessage('');
-
-            // Refresh lead details to show new message
-            const response = await getLeadDetails(leadId);
-            setLead(response.lead);
-
-            // Clear success message after 3 seconds
-            setTimeout(() => setSendSuccess(false), 3000);
-        } catch (err: any) {
-            console.error('Failed to send message:', err);
-            setSendError(err.response?.data?.message || 'Failed to send message');
-        } finally {
-            setSending(false);
-        }
-    };
 
 
     const getMessageStatusIcon = (status: string) => {
@@ -175,26 +144,67 @@ export default function LeadDetailsPage() {
                             <div className="lg:col-span-1 space-y-6">
                                 {/* Lead Card */}
                                 <div className="bg-white rounded-lg border border-slate-200 p-6">
-                                    <h2 className="text-xl font-bold text-slate-900 mb-4">{lead.name}</h2>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h2 className="text-xl font-bold text-slate-900">{lead.name}</h2>
+                                        <button
+                                            onClick={() => copyToClipboard(lead.name, 'name')}
+                                            className="p-1 hover:bg-slate-100 rounded transition-colors"
+                                            title="Copy name"
+                                        >
+                                            {copiedField === 'name' ? (
+                                                <Check className="h-4 w-4 text-green-600" />
+                                            ) : (
+                                                <Copy className="h-4 w-4 text-slate-400" />
+                                            )}
+                                        </button>
+                                    </div>
                                     
                                     <div className="space-y-3">
-                                        <div className="flex items-center text-sm">
-                                            <Phone className="h-4 w-4 text-slate-400 mr-3" />
-                                            <span className="text-slate-700">{lead.phone}</span>
+                                        <div className="flex items-center justify-between group">
+                                            <div className="flex items-center">
+                                                <Phone className="h-4 w-4 text-slate-400 mr-3" />
+                                                <span className="text-slate-700">{lead.phone}</span>
+                                            </div>
+                                            <button
+                                                onClick={() => copyToClipboard(lead.phone, 'phone')}
+                                                className="p-1 hover:bg-slate-100 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                                title="Copy phone"
+                                            >
+                                                {copiedField === 'phone' ? (
+                                                    <Check className="h-4 w-4 text-green-600" />
+                                                ) : (
+                                                    <Copy className="h-4 w-4 text-slate-400" />
+                                                )}
+                                            </button>
                                         </div>
                                         
                                         {lead.email && (
-                                            <div className="flex items-center text-sm">
-                                                <Mail className="h-4 w-4 text-slate-400 mr-3" />
-                                                <span className="text-slate-700">{lead.email}</span>
+                                            <div className="flex items-center justify-between group">
+                                                <div className="flex items-center">
+                                                    <Mail className="h-4 w-4 text-slate-400 mr-3" />
+                                                    <span className="text-slate-700">{lead.email}</span>
+                                                </div>
+                                                <button
+                                                    onClick={() => copyToClipboard(lead.email, 'email')}
+                                                    className="p-1 hover:bg-slate-100 rounded transition-colors opacity-0 group-hover:opacity-100"
+                                                    title="Copy email"
+                                                >
+                                                    {copiedField === 'email' ? (
+                                                        <Check className="h-4 w-4 text-green-600" />
+                                                    ) : (
+                                                        <Copy className="h-4 w-4 text-slate-400" />
+                                                    )}
+                                                </button>
                                             </div>
                                         )}
                                         
-                                        <div className="flex items-center text-sm">
-                                            <Calendar className="h-4 w-4 text-slate-400 mr-3" />
-                                            <span className="text-slate-700">
-                                                Created {formatDate(lead.created_at, true)}
-                                            </span>
+                                        <div className="flex items-center justify-between group">
+                                            <div className="flex items-center">
+                                                <Calendar className="h-4 w-4 text-slate-400 mr-3" />
+                                                <span className="text-slate-700">
+                                                    Created {formatDate(lead.created_at, true)}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -259,7 +269,6 @@ export default function LeadDetailsPage() {
                                                     onMeetingCreated={(meetLink) => {
                                                         setMeetingLink(meetLink);
                                                         setIsScheduling(false);
-                                                        // Refresh lead details to show timeline update
                                                         getLeadDetails(leadId).then(response => {
                                                             setLead(response.lead);
                                                         }).catch(console.error);
@@ -347,7 +356,6 @@ export default function LeadDetailsPage() {
                                                                     taskId={task.id}
                                                                     currentStatus={task.status}
                                                                     onStatusUpdate={(taskId, newStatus) => {
-                                                                        // Update the task in local state
                                                                         setTasks(prevTasks => 
                                                                             prevTasks.map(t => 
                                                                                 t.id === taskId 
@@ -385,7 +393,7 @@ export default function LeadDetailsPage() {
                                                 <MessageSquare className="h-12 w-12 text-slate-300 mx-auto mb-3" />
                                                 <p className="text-slate-600">No messages yet</p>
                                                 <p className="text-sm text-slate-500 mt-1">
-                                                    Start a conversation by sending a message below
+                                                    Messages from WhatsApp will appear here
                                                 </p>
                                             </div>
                                         ) : (
@@ -414,49 +422,11 @@ export default function LeadDetailsPage() {
                                         )}
                                     </div>
 
-                                    {/* Send Message Form */}
-                                    <div className="p-6 border-t border-slate-200">
-                                        {sendSuccess && (
-                                            <div className="mb-4 bg-green-50 border border-green-200 rounded-lg p-3 flex items-center">
-                                                <CheckCircle className="h-4 w-4 text-green-600 mr-2" />
-                                                <span className="text-sm text-green-700">Message sent successfully!</span>
-                                            </div>
-                                        )}
-
-                                        {sendError && (
-                                            <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3 flex items-center">
-                                                <AlertCircle className="h-4 w-4 text-red-600 mr-2" />
-                                                <span className="text-sm text-red-700">{sendError}</span>
-                                            </div>
-                                        )}
-
-                                        <form onSubmit={handleSendMessage} className="flex text-black space-x-3">
-                                            <input
-                                                type="text"
-                                                value={message}
-                                                onChange={(e) => setMessage(e.target.value)}
-                                                placeholder="Type your message..."
-                                                disabled={sending}
-                                                className="flex-1 px-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent disabled:bg-slate-50 disabled:text-slate-500"
-                                            />
-                                            <button
-                                                type="submit"
-                                                disabled={sending || !message.trim()}
-                                                className="flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors disabled:bg-slate-300 disabled:cursor-not-allowed"
-                                            >
-                                                {sending ? (
-                                                    <>
-                                                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                                        Sending...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Send className="h-4 w-4 mr-2" />
-                                                        Send
-                                                    </>
-                                                )}
-                                            </button>
-                                        </form>
+                                    {/* Message Input Removed */}
+                                    <div className="p-6 border-t border-slate-200 bg-slate-50">
+                                        <p className="text-sm text-slate-500 text-center">
+                                            Send messages directly from your WhatsApp app to this lead
+                                        </p>
                                     </div>
                                 </div>
                             </div>
