@@ -139,122 +139,122 @@ export default function Dashboard() {
 
   return (
     <PrivateRoute>
-      <div className="flex h-screen bg-slate-50">
+      <div className="flex h-screen bg-background">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         <div className="flex-1 flex flex-col overflow-hidden">
           <Header title="Dashboard" onMenuClick={() => setSidebarOpen(true)} />
 
-          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
-          {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
-            {kpisLoading ? (
-              <div className="col-span-4 text-center py-8 text-slate-600">
-                Loading dashboard metrics...
-              </div>
-            ) : (
-              kpis.map((kpi, index) => (
-                <KPICard
-                  key={index}
-                  title={kpi.title}
-                  value={kpi.value}
-                  change={kpi.change}
-                  trend={kpi.trend}
-                  icon={
-                    kpi.title === 'Total Leads'
-                      ? Users
-                      : kpi.title === 'Revenue'
-                        ? DollarSign
-                        : kpi.title === 'Conversion Rate'
-                          ? TrendingUp
-                          : BarChart3
-                  }
-                />
-              ))
-            )}
-          </div>
+          <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+            {/* KPI Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+              {kpisLoading ? (
+                <div className="col-span-4 text-center py-12 text-slate-500 text-xs font-semibold">
+                  Loading dashboard metrics...
+                </div>
+              ) : (
+                kpis.map((kpi, index) => (
+                  <KPICard
+                    key={index}
+                    title={kpi.title}
+                    value={kpi.value}
+                    change={kpi.change}
+                    trend={kpi.trend}
+                    icon={
+                      kpi.title === 'Total Leads'
+                        ? Users
+                        : kpi.title === 'Revenue'
+                          ? DollarSign
+                          : kpi.title === 'Conversion Rate'
+                            ? TrendingUp
+                            : BarChart3
+                    }
+                  />
+                ))
+              )}
+            </div>
 
-          {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-            <Link
-              href="/pipeline"
-              className="bg-white rounded-lg border border-slate-200 p-4 hover:shadow-md hover:border-indigo-300 transition-all duration-200 group"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-slate-600">View Pipeline</p>
-                  <p className="text-xs text-slate-500 mt-1">Manage your deals</p>
+            {/* Quick Actions */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <Link
+                href="/pipeline"
+                className="glass-card p-5 group"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500">Pipeline</p>
+                    <p className="text-xs text-[#1A1A1A] mt-1.5 font-bold">Manage Deals</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary transition-colors" />
                 </div>
-                <ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-indigo-600 transition-colors" />
-              </div>
-            </Link>
-            <Link
-              href="/tasks"
-              className="bg-white rounded-lg border border-slate-200 p-4 hover:shadow-md hover:border-indigo-300 transition-all duration-200 group"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-slate-600">View Tasks</p>
-                  <p className="text-xs text-slate-500 mt-1">{upcomingTasks.length} upcoming</p>
+              </Link>
+              <Link
+                href="/tasks"
+                className="glass-card p-5 group"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500">Tasks</p>
+                    <p className="text-xs text-[#1A1A1A] mt-1.5 font-bold">{upcomingTasks.length} Pending Tasks</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary transition-colors" />
                 </div>
-                <ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-indigo-600 transition-colors" />
-              </div>
-            </Link>
-            <Link
-              href="/analytics"
-              className="bg-white rounded-lg border border-slate-200 p-4 hover:shadow-md hover:border-indigo-300 transition-all duration-200 group"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-slate-600">Analytics</p>
-                  <p className="text-xs text-slate-500 mt-1">View insights</p>
+              </Link>
+              <Link
+                href="/analytics"
+                className="glass-card p-5 group"
+              >
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-xs font-bold text-slate-500">Analytics</p>
+                    <p className="text-xs text-[#1A1A1A] mt-1.5 font-bold">Performance Data</p>
+                  </div>
+                  <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-primary transition-colors" />
                 </div>
-                <ArrowRight className="h-5 w-5 text-slate-400 group-hover:text-indigo-600 transition-colors" />
-              </div>
-            </Link>
-            <Link
-              href="/add-lead"
-              className="bg-indigo-600 rounded-lg border border-indigo-600 p-4 hover:bg-indigo-700 transition-all duration-200 group"
-            >
-              <div className="flex items-center justify-between">
-                <div className="text-left">
-                  <p className="text-sm font-medium text-white">Add New Lead</p>
-                  <p className="text-xs text-indigo-100 mt-1">Create lead</p>
+              </Link>
+              <Link
+                href="/add-lead"
+                className="bg-primary rounded-2xl p-5 hover:bg-primary-hover transition-all duration-300 group shadow-lg shadow-blue-500/20"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="text-left">
+                    <p className="text-xs font-bold text-white/70">Leads</p>
+                    <p className="text-xs text-white mt-1.5 font-bold">Create New Lead</p>
+                  </div>
+                  <UserPlus className="h-4 w-4 text-white" />
                 </div>
-                <UserPlus className="h-5 w-5 text-white" />
-              </div>
-            </Link>
-          </div>
+              </Link>
+            </div>
 
-          {/* Pipeline Overview & Recent Leads */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            {/* Pipeline Overview & Recent Leads */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
             {/* Mini Pipeline Overview */}
-            <div className="lg:col-span-2 bg-white rounded-lg border border-slate-200 p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-base font-semibold text-slate-900">Pipeline Overview</h3>
+            <div className="lg:col-span-2 glass-card p-8">
+              <div className="flex items-center justify-between mb-8">
+                <h3 className="text-sm font-bold text-[#1A1A1A]">Pipeline Distribution</h3>
                 <Link
                   href="/pipeline"
-                  className="text-indigo-600 hover:text-indigo-700 text-xs font-semibold flex items-center"
+                  className="text-slate-500 hover:text-primary text-xs font-bold flex items-center transition-all"
                 >
-                  View Full Pipeline
-                  <ArrowRight className="h-3.5 w-3.5 ml-1" />
+                  Full Board
+                  <ArrowRight className="h-4 w-4 ml-2" />
                 </Link>
               </div>
               {pipelineLoading ? (
-                <div className="text-center py-8 text-slate-600">
-                  Loading pipeline data...
+                <div className="text-center py-12 text-slate-500 text-xs font-semibold">
+                  Loading distribution...
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {pipelineStages.map((stage, index) => (
                     <div
                       key={index}
-                      className={`${stage.bgColor} rounded-lg p-4 border ${stage.borderColor} text-center`}
+                      className="bg-slate-50 rounded-lg p-5 border border-border text-center hover:border-primary/30 transition-all"
                     >
-                      <p className={`text-2xl font-bold ${stage.textColor} mb-1`}>
+                      <p className="text-xl font-bold text-[#1A1A1A] mb-1">
                         {stage.count}
                       </p>
-                      <p className={`text-xs font-medium ${stage.textColor}`}>
+                      <p className="text-[10px] font-bold text-slate-500">
                         {stage.name}
                       </p>
                     </div>
@@ -263,120 +263,119 @@ export default function Dashboard() {
               )}
             </div>
 
-            {/* Recent Leads */}
-            <div className="bg-white rounded-lg border border-slate-200 p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-base font-semibold text-slate-900">Recent Leads</h3>
-                <Link
-                  href="/leads"
-                  className="text-indigo-600 hover:text-indigo-700 text-xs font-semibold"
-                >
-                  View all
-                </Link>
-              </div>
-              <div className="space-y-3">
-                {loading ? (
-                  <p className="text-sm text-slate-500">Loading leads...</p>
-                ) : recentLeads.length === 0 ? (
-                  <p className="text-sm text-slate-500">No leads yet</p>
-                ) : (
-                  recentLeads.map((lead) => (
-                    <Link key={lead.id} href={`/leads/${lead.id}`}>
-                      <div className="p-3 rounded-lg border border-slate-200 hover:border-indigo-300 hover:bg-slate-50 transition-all cursor-pointer">
-                        <div className="flex items-center justify-between">
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-900 truncate">{lead.name}</p>
-                            <p className="text-xs text-slate-600">{lead.phone}</p>
+              {/* Recent Leads */}
+              <div className="glass-card p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-sm font-bold text-[#1A1A1A]">Recent Leads</h3>
+                  <Link
+                    href="/leads"
+                    className="text-slate-500 hover:text-primary text-xs font-bold transition-all"
+                  >
+                    All Leads
+                  </Link>
+                </div>
+                <div className="space-y-4">
+                  {loading ? (
+                    <p className="text-xs text-slate-500 font-semibold text-center py-4">Syncing...</p>
+                  ) : recentLeads.length === 0 ? (
+                    <p className="text-xs text-slate-500 font-semibold text-center py-4">No leads found</p>
+                  ) : (
+                    recentLeads.map((lead) => (
+                      <Link key={lead.id} href={`/leads/${lead.id}`}>
+                        <div className="p-4 rounded-xl border border-border bg-slate-50 hover:border-primary/30 hover:bg-white transition-all cursor-pointer group">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1 min-w-0">
+                              <p className="text-xs font-bold text-[#1A1A1A] truncate">{lead.name}</p>
+                              <p className="text-[10px] text-slate-500 mt-1">{lead.phone || lead.email}</p>
+                            </div>
+                            <span className={`ml-4 px-2.5 py-1 text-[10px] font-bold rounded-md ${
+                                lead.stage === 'Won' ? 'bg-success/10 text-success' :
+                                lead.stage === 'Lost' ? 'bg-danger/10 text-danger' :
+                                'bg-slate-200 text-slate-500'
+                              }`}>
+                              {lead.stage}
+                            </span>
                           </div>
-                          <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full whitespace-nowrap ${
-                            lead.stage === 'Won' ? 'bg-green-100 text-green-700' :
-                            lead.stage === 'Lost' ? 'bg-red-100 text-red-700' :
-                            lead.stage === 'Incoming' ? 'bg-blue-100 text-blue-700' :
-                            lead.stage === 'Contacted' ? 'bg-indigo-100 text-indigo-700' :
-                            'bg-slate-100 text-slate-700'
-                          }`}>
-                            {lead.stage}
-                          </span>
                         </div>
-                      </div>
-                    </Link>
-                  ))
-                )}
+                      </Link>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Performance Metrics & Upcoming Tasks */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Performance Metrics */}
-            <div className="bg-white rounded-lg border border-slate-200 p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-base font-semibold text-slate-900">Performance Metrics</h3>
-                <Link
-                  href="/analytics"
-                  className="text-indigo-600 hover:text-indigo-700 text-xs font-semibold"
-                >
-                  View analytics
-                </Link>
-              </div>
-              <div className="space-y-4">
-                {metricsLoading ? (
-                  <p className="text-sm text-slate-500">Loading metrics...</p>
-                ) : performanceMetrics.length === 0 ? (
-                  <p className="text-sm text-slate-500">No metrics available</p>
-                ) : (
-                  performanceMetrics.map((metric, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between mb-2">
-                          <p className="text-sm font-medium text-slate-900">{metric.metric}</p>
-                          <div className="flex items-center space-x-2">
-                            <span className="text-sm font-semibold text-slate-900">{metric.value}</span>
-                            <span className="text-xs text-slate-500">/ {metric.target}</span>
+            {/* Performance Metrics & Upcoming Tasks */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Performance Metrics */}
+              <div className="glass-card p-8">
+                <div className="flex items-center justify-between mb-10">
+                  <h3 className="text-sm font-bold text-[#1A1A1A]">Performance</h3>
+                  <Link
+                    href="/analytics"
+                    className="text-slate-500 hover:text-primary text-xs font-bold transition-all"
+                  >
+                    View Analytics
+                  </Link>
+                </div>
+                <div className="space-y-8">
+                  {metricsLoading ? (
+                    <p className="text-xs text-slate-500 font-semibold text-center py-8">Loading...</p>
+                  ) : performanceMetrics.length === 0 ? (
+                    <p className="text-xs text-slate-500 font-semibold text-center py-8">No data available</p>
+                  ) : (
+                    performanceMetrics.map((metric, index) => (
+                      <div key={index} className="flex items-center justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between mb-3">
+                            <p className="text-xs font-bold text-[#1A1A1A]">{metric.metric}</p>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-xs font-bold text-[#1A1A1A]">{metric.value}</span>
+                              <span className="text-[10px] text-slate-500 font-medium">/ {metric.target}</span>
+                            </div>
+                          </div>
+                          <div className="w-full bg-slate-100 rounded-full h-[4px]">
+                            <div
+                              className={`h-full rounded-full transition-all duration-1000 ${
+                                metric.progress >= 90 ? 'bg-success' :
+                                metric.progress >= 70 ? 'bg-[#0066FF]' :
+                                'bg-slate-300'
+                                }`}
+                              style={{ width: `${Math.min(metric.progress, 100)}%` }}
+                            ></div>
                           </div>
                         </div>
-                        <div className="w-full bg-slate-200 rounded-full h-2">
-                          <div 
-                            className={`h-2 rounded-full transition-all duration-300 ${
-                              metric.progress >= 90 ? 'bg-green-500' :
-                              metric.progress >= 70 ? 'bg-blue-500' :
-                              metric.progress >= 50 ? 'bg-amber-500' : 'bg-red-500'
-                            }`}
-                            style={{ width: `${Math.min(metric.progress, 100)}%` }}
-                          ></div>
-                        </div>
-                        <p className="text-xs text-slate-500 mt-1">{metric.progress}% of target</p>
                       </div>
+                    ))
+                  )}
+                </div>
+              </div>
+
+              {/* Upcoming Tasks */}
+              <div className="glass-card p-8">
+                <div className="flex items-center justify-between mb-10">
+                  <h3 className="text-sm font-bold text-[#1A1A1A]">Upcoming Tasks</h3>
+                  <Link
+                    href="/tasks"
+                    className="text-slate-500 hover:text-primary text-xs font-bold transition-all"
+                  >
+                    All Tasks
+                  </Link>
+                </div>
+                <div className="space-y-4">
+                  {tasksLoading ? (
+                    <p className="text-xs text-slate-500 font-semibold text-center py-8">Loading tasks...</p>
+                  ) : upcomingTasks.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12">
+                      <p className="text-xs text-slate-500 font-bold">No upcoming tasks</p>
                     </div>
-                  ))
-                )}
+                  ) : (
+                    convertTasksForCard(upcomingTasks).map((task) => (
+                      <TaskCard key={task.id} task={task} />
+                    ))
+                  )}
+                </div>
               </div>
             </div>
-
-            {/* Upcoming Tasks */}
-            <div className="bg-white rounded-lg border border-slate-200 p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h3 className="text-base font-semibold text-slate-900">Upcoming Tasks</h3>
-                <Link
-                  href="/tasks"
-                  className="text-indigo-600 hover:text-indigo-700 text-xs font-semibold"
-                >
-                  View all
-                </Link>
-              </div>
-              <div className="space-y-3">
-                {tasksLoading ? (
-                  <p className="text-sm text-slate-500">Loading tasks...</p>
-                ) : upcomingTasks.length === 0 ? (
-                  <p className="text-sm text-slate-500">No upcoming tasks</p>
-                ) : (
-                  convertTasksForCard(upcomingTasks).map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
           </main>
         </div>
       </div>

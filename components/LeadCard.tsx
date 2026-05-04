@@ -67,36 +67,29 @@ export default function LeadCard({ lead, compact = false, isDraggable = false }:
             <div
                 ref={setNodeRef}
                 style={style}
-                className={`bg-white rounded-md border border-slate-200 p-3 hover:shadow-sm hover:border-slate-300 transition-all duration-150 ${
-                    isDragging ? 'shadow-lg border-indigo-300' : ''
-                }`}
+                className={`bg-white rounded-xl border border-slate-100 p-4 hover:border-primary/20 transition-all duration-300 ${isDragging ? 'shadow-2xl border-primary/50 scale-[1.02] z-50' : 'shadow-sm'
+                    } group`}
             >
-                <div className="flex items-start justify-between mb-1.5">
-                    <div className="flex items-center space-x-2 flex-1">
+                <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center space-x-3 flex-1">
                         <div
                             {...attributes}
                             {...listeners}
-                            className="cursor-grab active:cursor-grabbing p-1 hover:bg-slate-100 rounded"
+                            className="cursor-grab active:cursor-grabbing p-1.5 hover:bg-slate-50 rounded-lg text-slate-300 hover:text-primary transition-all"
                         >
-                            <GripVertical className="h-3 w-3 text-slate-400" />
+                            <GripVertical className="h-3.5 w-3.5 stroke-[2.5px]" />
                         </div>
-                        <p className="text-sm font-semibold text-slate-900 flex-1">{lead.name}</p>
+                        <p className="text-[11px] font-bold text-slate-900 truncate group-hover:text-primary transition-colors tracking-tight">{lead.name}</p>
                     </div>
-                    <Link href={`/leads/${lead.id}`} className="hover:bg-slate-100 p-1 rounded">
-                        <ChevronRight className="h-4 w-4 text-slate-400 flex-shrink-0" />
-                    </Link>
                 </div>
-                <p className="text-xs text-slate-500 mb-2 ml-6">{lead.email || lead.phone}</p>
-                <p className="text-sm font-medium text-slate-700 mb-2 ml-6">
-                    {lead.source}
-                </p>
-                <div className="flex items-center justify-between ml-6">
-                    <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${priorityColor}-50 text-${priorityColor}-700`}
-                    >
-                        Medium
-                    </span>
-                    <span className="text-xs text-slate-500">{formatDate(lead.updated_at)}</span>
+                <div className="ml-9">
+                    <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider truncate">{lead.email || lead.phone}</p>
+                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-slate-50/50">
+                        <span className="text-[9px] font-bold text-primary bg-blue-50/50 px-2.5 py-1 rounded-full uppercase tracking-widest">
+                            {lead.source}
+                        </span>
+                        <span className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{formatDate(lead.updated_at)}</span>
+                    </div>
                 </div>
             </div>
         );
@@ -105,23 +98,18 @@ export default function LeadCard({ lead, compact = false, isDraggable = false }:
     return (
         <Link
             href={`/leads/${lead.id}`}
-            className="bg-white rounded-md border border-slate-200 p-3 hover:shadow-sm hover:border-slate-300 transition-all duration-150 cursor-pointer block"
+            className="bg-white rounded-xl border border-slate-100 p-4 hover:border-primary/20 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer block group"
         >
-            <div className="flex items-start justify-between mb-1.5">
-                <p className="text-sm font-semibold text-slate-900">{lead.name}</p>
-                <ChevronRight className="h-4 w-4 text-slate-400 flex-shrink-0" />
+            <div className="flex items-start justify-between mb-2">
+                <p className="text-[11px] font-bold text-slate-900 group-hover:text-primary transition-colors tracking-tight">{lead.name}</p>
+                <ChevronRight className="h-3.5 w-3.5 text-slate-200 group-hover:text-primary transition-all group-hover:translate-x-0.5" />
             </div>
-            <p className="text-xs text-slate-500 mb-2">{lead.email || lead.phone}</p>
-            <p className="text-sm font-medium text-slate-700 mb-2">
-                {lead.source}
-            </p>
-            <div className="flex items-center justify-between">
-                <span
-                    className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-${priorityColor}-50 text-${priorityColor}-700`}
-                >
-                    Medium
+            <p className="text-[9px] text-slate-400 font-bold uppercase tracking-wider truncate mb-4">{lead.email || lead.phone}</p>
+            <div className="flex items-center justify-between pt-3 border-t border-slate-50/50">
+                <span className="text-[9px] font-bold text-primary bg-blue-50/50 px-2.5 py-1 rounded-full uppercase tracking-widest">
+                    {lead.source}
                 </span>
-                <span className="text-xs text-slate-500">{formatDate(lead.updated_at)}</span>
+                <span className="text-[9px] text-slate-400 font-bold uppercase tracking-widest">{formatDate(lead.updated_at)}</span>
             </div>
         </Link>
     );

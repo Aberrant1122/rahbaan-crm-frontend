@@ -136,20 +136,20 @@ function CreateTaskForm() {
 
     return (
         <PrivateRoute>
-            <div className="flex h-screen bg-slate-50">
+            <div className="flex h-screen bg-background">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
                 <div className="flex-1 flex flex-col overflow-hidden">
-                    <Header title="Create New Task" onMenuClick={() => setSidebarOpen(true)} />
+                    <Header title="Deploy New Workflow" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
                     <div className="max-w-4xl mx-auto">
                         <button
                             onClick={() => router.back()}
-                            className="flex items-center text-slate-600 hover:text-slate-900 mb-6 transition-colors"
+                            className="flex items-center text-slate-400 hover:text-slate-900 mb-10 transition-all group"
                         >
-                            <ArrowLeft className="h-4 w-4 mr-2" />
-                            <span className="text-sm font-medium">Back</span>
+                            <ArrowLeft className="h-4 w-4 mr-3 transition-transform group-hover:-translate-x-1" />
+                            <span className="text-[11px] font-bold uppercase tracking-widest">Return to Flow</span>
                         </button>
 
                         {showSuccess && (
@@ -175,39 +175,39 @@ function CreateTaskForm() {
                             </div>
                         )}
 
-                        <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
-                            <div className="border-b border-slate-200 px-6 py-4">
-                                <h2 className="text-lg font-semibold text-slate-900">
-                                    Task Information
+                        <div className="glass-card overflow-hidden">
+                            <div className="border-b border-slate-50 px-8 py-6 bg-slate-50/30">
+                                <h2 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">
+                                    Workflow Specifications
                                 </h2>
-                                <p className="text-sm text-slate-500 mt-1">
-                                    Fill in the details to create a new task
+                                <p className="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-widest">
+                                    Define the parameters for this task execution.
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
+                            <form onSubmit={handleSubmit} className="p-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 text-black">
                                     <div className="md:col-span-2">
                                         <label
                                             htmlFor="title"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Task Title <span className="text-red-500">*</span>
+                                            Objective <span className="text-danger">*</span>
                                         </label>
                                         <div className="relative">
-                                            <FileText className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                            <FileText className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                                             <input
                                                 type="text"
                                                 id="title"
                                                 name="title"
                                                 value={formData.title}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+                                                className={`w-full pl-11 pr-4 py-3 text-[11px] font-medium transition-all rounded-xl ${
                                                     errors.title
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input'
                                                 }`}
-                                                placeholder="Follow up with client"
+                                                placeholder="Primary Task Identification"
                                             />
                                         </div>
                                         {errors.title && (
@@ -221,9 +221,9 @@ function CreateTaskForm() {
                                     <div className="md:col-span-2">
                                         <label
                                             htmlFor="description"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Description
+                                            Operational Details
                                         </label>
                                         <textarea
                                             id="description"
@@ -231,27 +231,27 @@ function CreateTaskForm() {
                                             value={formData.description}
                                             onChange={handleChange}
                                             rows={4}
-                                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all resize-none"
-                                            placeholder="Add task details..."
+                                            className="w-full px-4 py-4 text-[11px] font-medium search-input transition-all resize-none rounded-xl"
+                                            placeholder="Specify detailed instructions or context..."
                                         />
                                     </div>
 
                                     <div>
                                         <label
                                             htmlFor="due_date"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Due Date
+                                            Deadline
                                         </label>
                                         <div className="relative">
-                                            <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                            <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                                             <input
                                                 type="date"
                                                 id="due_date"
                                                 name="due_date"
                                                 value={formData.due_date}
                                                 onChange={handleChange}
-                                                className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                                className="w-full pl-11 pr-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input transition-all rounded-xl"
                                             />
                                         </div>
                                     </div>
@@ -259,16 +259,16 @@ function CreateTaskForm() {
                                     <div>
                                         <label
                                             htmlFor="priority"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Priority
+                                            Priority Tier
                                         </label>
                                         <select
                                             id="priority"
                                             name="priority"
                                             value={formData.priority}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                            className="w-full px-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input focus:bg-white appearance-none"
                                         >
                                             {priorityOptions.map((option) => (
                                                 <option key={option} value={option}>
@@ -281,16 +281,16 @@ function CreateTaskForm() {
                                     <div>
                                         <label
                                             htmlFor="status"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Status
+                                            Current State
                                         </label>
                                         <select
                                             id="status"
                                             name="status"
                                             value={formData.status}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                            className="w-full px-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input focus:bg-white appearance-none"
                                         >
                                             {statusOptions.map((option) => (
                                                 <option key={option} value={option}>
@@ -303,24 +303,24 @@ function CreateTaskForm() {
                                     <div className="md:col-span-2">
                                         <label
                                             htmlFor="lead_id"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3"
                                         >
-                                            Assign to Lead (Optional)
+                                            Context (Lead Mapping)
                                         </label>
                                         <div className="relative">
-                                            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
+                                            <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none" />
                                             <select
                                                 id="lead_id"
                                                 name="lead_id"
                                                 value={formData.lead_id}
                                                 onChange={handleChange}
-                                                className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                                className="w-full pl-11 pr-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input appearance-none rounded-xl"
                                                 disabled={loadingLeads}
                                             >
-                                                <option value="">Select a lead (optional)</option>
+                                                <option value="">No Lead Assigned</option>
                                                 {leads.map((lead) => (
                                                     <option key={lead.id} value={lead.id}>
-                                                        {lead.name} - {lead.email || lead.phone}
+                                                        {lead.name} • {lead.stage}
                                                     </option>
                                                 ))}
                                             </select>
@@ -331,27 +331,27 @@ function CreateTaskForm() {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center justify-end space-x-3 mt-8 pt-6 border-t border-slate-200">
+                                <div className="flex items-center justify-end space-x-4 mt-12 pt-8 border-t border-slate-50">
                                     <button
                                         type="button"
                                         onClick={() => router.back()}
                                         disabled={loading}
-                                        className="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-8 py-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all disabled:opacity-30"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className="px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                                        className="px-10 py-3 text-[10px] font-bold uppercase tracking-widest text-white bg-primary rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                                     >
                                         {loading ? (
                                             <>
-                                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                                Creating...
+                                                <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                                Processing...
                                             </>
                                         ) : (
-                                            'Create Task'
+                                            'Deploy Task'
                                         )}
                                     </button>
                                 </div>

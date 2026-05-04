@@ -24,19 +24,28 @@ export default function PipelineColumn({ stage, leads, onAddLead, isDragEnabled 
     return (
         <div
             ref={setNodeRef}
-            className={`flex-shrink-0 w-72 ${stage.bgColor} rounded-lg p-4 border ${stage.borderColor} ${
-                isOver && isDragEnabled ? 'ring-2 ring-indigo-400 ring-opacity-50' : ''
-            } transition-all duration-200`}
+            className={`flex-shrink-0 w-80 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-slate-100 shadow-sm ${isOver && isDragEnabled ? 'ring-4 ring-primary/5 border-primary/20 bg-white' : ''
+                } transition-all duration-300`}
         >
-            <div className="flex items-center justify-between mb-3">
-                <h4 className={`text-sm font-semibold ${stage.textColor}`}>{stage.name}</h4>
-                <span
-                    className={`text-xs font-bold ${stage.textColor} bg-white px-2 py-0.5 rounded-full`}
-                >
-                    {stage.count}
-                </span>
+            <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center space-x-3">
+                    <h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-wider">{stage.name}</h4>
+                    <span
+                        className="text-[10px] font-bold text-primary bg-blue-50 px-2.5 py-0.5 rounded-full"
+                    >
+                        {stage.count}
+                    </span>
+                </div>
+                {onAddLead && (
+                    <button
+                        onClick={onAddLead}
+                        className="p-1.5 text-slate-400 hover:text-primary hover:bg-blue-50 rounded-lg transition-all"
+                    >
+                        <Plus className="h-4 w-4" />
+                    </button>
+                )}
             </div>
-            <div className="space-y-2.5 max-h-[calc(100vh-16rem)] overflow-y-auto">
+            <div className="space-y-3 max-h-[calc(100vh-20rem)] overflow-y-auto pr-1 scrollbar-hide">
                 {isDragEnabled ? (
                     <SortableContext items={leadIds} strategy={verticalListSortingStrategy}>
                         {leads.map((lead) => (
@@ -49,15 +58,6 @@ export default function PipelineColumn({ stage, leads, onAddLead, isDragEnabled 
                     ))
                 )}
             </div>
-            {onAddLead && (
-                <button
-                    onClick={onAddLead}
-                    className="mt-3 w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white/50 rounded-lg transition-colors"
-                >
-                    <Plus className="h-4 w-4 mr-1.5" />
-                    Add Lead
-                </button>
-            )}
         </div>
     );
 }

@@ -27,7 +27,7 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
-    
+
     const priorityColor = getPriorityColor(task.priority);
     const statusColor = getTaskStatusColor(task.status);
 
@@ -39,23 +39,23 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
 
     const handleStatusChange = async (newStatus: 'Pending' | 'In Progress' | 'Completed') => {
         if (newStatus === task.status) return;
-        
+
         try {
             setIsUpdating(true);
             console.log('Updating task status:', { taskId: task.id, newStatus });
-            
+
             const result = await updateTaskStatus(task.id, newStatus);
             console.log('Status update result:', result);
-            
+
             // Call parent callback if provided
             if (onStatusUpdate) {
                 onStatusUpdate(task.id, newStatus);
             }
-            
+
             setShowStatusDropdown(false);
         } catch (error: any) {
             console.error('Failed to update task status:', error);
-            
+
             // Show detailed error message
             const errorMessage = error.response?.data?.message || error.message || 'Failed to update task status';
             alert(`Error: ${errorMessage}`);
@@ -67,95 +67,98 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
     const getStatusConfig = (status: string) => {
         switch (status) {
             case 'Completed':
-                return { bg: 'bg-emerald-50', text: 'text-emerald-600', icon: CheckCircle };
+                return { bg: 'bg-success/10', text: 'text-success', icon: CheckCircle };
             case 'In Progress':
-                return { bg: 'bg-blue-50', text: 'text-blue-600', icon: Clock };
+                return { bg: 'bg-primary/10', text: 'text-primary', icon: Clock };
             default:
-                return { bg: 'bg-slate-50', text: 'text-slate-500', icon: AlertCircle };
+                return { bg: 'bg-slate-100', text: 'text-slate-500', icon: AlertCircle };
         }
     };
 
     const statusConfig = getStatusConfig(task.status);
 
     return (
-        <div className="flex items-center justify-between p-4 border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-all duration-150">
-            <div className="flex items-center space-x-3.5">
-                <div className={`p-2 rounded-lg ${statusConfig.bg}`}>
-                    <StatusIcon className={`h-5 w-5 ${statusConfig.text}`} />
+        <div className="flex items-center justify-between p-5 border border-slate-100 bg-white rounded-2xl hover:border-primary/20 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300 group">
+            <div className="flex items-center space-x-4">
+                <div className={`p-2.5 rounded-xl ${statusConfig.bg} shadow-sm`}>
+                    <statusConfig.icon className={`h-5 w-5 ${statusConfig.text}`} />
                 </div>
                 <div>
-                    <p className="text-sm font-semibold text-slate-900">{task.title}</p>
-                    <div className="flex items-center space-x-3 mt-1.5">
-                        <span className="text-xs text-slate-500 flex items-center">
-                            <Calendar className="h-3.5 w-3.5 mr-1" />
+                    <p className="text-[13px] font-bold text-slate-900 group-hover:text-primary transition-colors">{task.title}</p>
+                    <div className="flex items-center space-x-4 mt-2">
+                        <span className="text-[10px] text-slate-400 flex items-center font-bold uppercase tracking-wider">
+                            <Calendar className="h-3.5 w-3.5 mr-1.5 text-slate-300" />
                             {formatDate(task.dueDate)}
                         </span>
                         <span
-                            className={`text-xs px-2 py-0.5 rounded-full font-medium ${task.priority === 'High'
-                                    ? 'bg-rose-50 text-rose-700'
-                                    : task.priority === 'Medium'
-                                        ? 'bg-amber-50 text-amber-700'
-                                        : 'bg-slate-100 text-slate-600'
+                            className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-widest ${task.priority === 'High'
+                                ? 'bg-rose-50 text-rose-600'
+                                : task.priority === 'Medium'
+                                    ? 'bg-blue-50 text-blue-600'
+                                    : 'bg-slate-100 text-slate-500'
                                 }`}
                         >
                             {task.priority}
                         </span>
-                        <span className="text-xs text-slate-500">{task.leadName}</span>
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider flex items-center">
+                            <div className="w-1.5 h-1.5 rounded-full bg-slate-200 mr-2"></div>
+                            {task.leadName}
+                        </span>
                     </div>
                 </div>
             </div>
-            
-            <div className="flex items-center space-x-2">
+
+            <div className="flex items-center space-x-3">
                 {/* Status Dropdown */}
                 <div className="relative" ref={dropdownRef}>
                     <button
                         onClick={() => setShowStatusDropdown(!showStatusDropdown)}
                         disabled={isUpdating}
-                        className={`flex items-center space-x-1 px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
-                            task.status === 'Completed'
-                                ? 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                        className={`flex items-center space-x-2 px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all ${task.status === 'Completed'
+                                ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
                                 : task.status === 'In Progress'
-                                    ? 'bg-blue-100 text-blue-700 hover:bg-blue-200'
-                                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                        } ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                            } ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isUpdating ? (
                             <Loader2 className="h-3 w-3 animate-spin" />
                         ) : (
                             <>
                                 <span>{task.status}</span>
-                                <ChevronDown className="h-3 w-3" />
+                                <ChevronDown className="h-3 w-3 opacity-50" />
                             </>
                         )}
                     </button>
 
                     {showStatusDropdown && !isUpdating && (
-                        <div className="absolute right-0 top-full mt-1 w-36 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
-                            {['Pending', 'In Progress', 'Completed'].map((status) => (
-                                <button
-                                    key={status}
-                                    onClick={() => handleStatusChange(status as 'Pending' | 'In Progress' | 'Completed')}
-                                    className={`w-full text-black text-left px-3 py-2 text-xs hover:bg-slate-50 first:rounded-t-lg last:rounded-b-lg ${
-                                        status === task.status ? 'bg-slate-50 font-medium' : ''
-                                    }`}
-                                >
-                                    <div className="flex items-center space-x-2">
-                                        {status === 'Completed' && <CheckCircle className="h-3 w-3 text-emerald-600" />}
-                                        {status === 'In Progress' && <Clock className="h-3 w-3 text-blue-600" />}
-                                        {status === 'Pending' && <AlertCircle className="h-3 w-3 text-slate-500" />}
-                                        <span>{status}</span>
-                                    </div>
-                                </button>
-                            ))}
+                        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-slate-100 rounded-xl shadow-2xl z-50 overflow-hidden animate-in">
+                            <div className="p-1">
+                                {['Pending', 'In Progress', 'Completed'].map((status) => (
+                                    <button
+                                        key={status}
+                                        onClick={() => handleStatusChange(status as 'Pending' | 'In Progress' | 'Completed')}
+                                        className={`w-full text-left px-4 py-3 text-[10px] font-bold uppercase tracking-widest hover:bg-slate-50 rounded-lg transition-all ${status === task.status ? 'text-primary bg-blue-50/50' : 'text-slate-600'
+                                            }`}
+                                    >
+                                        <div className="flex items-center space-x-3">
+                                            {status === 'Completed' && <CheckCircle className="h-3.5 w-3.5 text-emerald-500" />}
+                                            {status === 'In Progress' && <Clock className="h-3.5 w-3.5 text-blue-500" />}
+                                            {status === 'Pending' && <AlertCircle className="h-3.5 w-3.5 text-slate-400" />}
+                                            <span>{status}</span>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     )}
                 </div>
 
-                <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-                    <Phone className="h-4 w-4" />
+                <button className="p-2.5 text-slate-400 hover:text-primary hover:bg-blue-50 rounded-xl transition-all">
+                    <Phone className="h-4 w-4 stroke-[1.8px]" />
                 </button>
-                <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-                    <Mail className="h-4 w-4" />
+                <button className="p-2.5 text-slate-400 hover:text-primary hover:bg-blue-50 rounded-xl transition-all">
+                    <Mail className="h-4 w-4 stroke-[1.8px]" />
                 </button>
             </div>
         </div>

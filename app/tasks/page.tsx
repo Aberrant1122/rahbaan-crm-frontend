@@ -46,30 +46,30 @@ export default function TasksPage() {
 
     return (
         <PrivateRoute>
-            <div className="flex h-screen bg-slate-50">
+            <div className="flex h-screen bg-background">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
                 <div className="flex-1 flex flex-col overflow-hidden">
-                    <Header title="Task Management" onMenuClick={() => setSidebarOpen(true)} />
+                    <Header title="Tasks" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
                     {/* Filters and Actions */}
-                    <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                        <div className="flex text-black items-center space-x-3">
+                    <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                        <div className="flex text-black items-center space-x-4">
                             <div className="relative">
-                                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                                <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
                                 <input
                                     type="text"
                                     placeholder="Search tasks..."
-                                    className="pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white w-64"
+                                    className="pl-10 pr-4 py-2.5 text-xs font-semibold search-input w-72"
                                 />
                             </div>
                             <select
                                 value={filterStatus}
                                 onChange={(e) => setFilterStatus(e.target.value)}
-                                className="px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+                                className="px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest search-input bg-white appearance-none min-w-[160px]"
                             >
-                                <option value="all">All Status</option>
+                                <option value="all">Status: All</option>
                                 <option value="Pending">Pending</option>
                                 <option value="In Progress">In Progress</option>
                                 <option value="Completed">Completed</option>
@@ -77,9 +77,9 @@ export default function TasksPage() {
                             <select
                                 value={filterPriority}
                                 onChange={(e) => setFilterPriority(e.target.value)}
-                                className="px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white"
+                                className="px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest search-input bg-white appearance-none min-w-[160px]"
                             >
-                                <option value="all">All Priority</option>
+                                <option value="all">Priority: All</option>
                                 <option value="High">High</option>
                                 <option value="Medium">Medium</option>
                                 <option value="Low">Low</option>
@@ -87,7 +87,7 @@ export default function TasksPage() {
                         </div>
                         <button 
                             onClick={() => router.push('/create-task')}
-                            className="flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                            className="flex items-center px-6 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20"
                         >
                             <Plus className="h-4 w-4 mr-2" />
                             Add Task
@@ -95,23 +95,23 @@ export default function TasksPage() {
                     </div>
 
                     {/* Task List */}
-                    <div className="bg-white rounded-lg border border-slate-200 p-6">
-                        <div className="flex items-center justify-between mb-5">
-                            <h3 className="text-base font-semibold text-slate-900">
-                                Tasks ({filteredTasks.length})
+                    <div className="glass-card p-8">
+                        <div className="flex items-center justify-between mb-10">
+                            <h3 className="text-sm font-bold text-slate-900">
+                                Active Tasks ({filteredTasks.length})
                             </h3>
                         </div>
                         <div className="space-y-3">
                             {loading ? (
                                 <div className="flex items-center justify-center py-12">
-                                    <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+                                    <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
                                 </div>
                             ) : error ? (
                                 <div className="text-center py-12">
                                     <p className="text-red-500">{error}</p>
                                     <button
                                         onClick={fetchTasks}
-                                        className="mt-4 px-4 py-2 text-sm text-indigo-600 hover:text-indigo-700"
+                                        className="mt-4 px-4 py-2 text-sm text-teal-600 hover:text-teal-700"
                                     >
                                         Try Again
                                     </button>
@@ -143,13 +143,13 @@ export default function TasksPage() {
                                     />
                                 ))
                             ) : (
-                                <div className="text-center py-12">
-                                    <p className="text-slate-500">No tasks found</p>
+                                <div className="text-center py-20">
+                                    <p className="text-sm font-medium text-slate-400">No tasks found</p>
                                     <button
                                         onClick={() => router.push('/create-task')}
-                                        className="mt-4 px-4 py-2 text-sm text-indigo-600 hover:text-indigo-700"
+                                        className="mt-6 px-6 py-2.5 text-xs font-bold text-primary hover:text-white hover:bg-primary border border-primary rounded-xl transition-all"
                                     >
-                                        Create your first task
+                                        Add Task
                                     </button>
                                 </div>
                             )}

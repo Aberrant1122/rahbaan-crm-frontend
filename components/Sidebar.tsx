@@ -47,52 +47,58 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
     return (
         <div
-            className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                } transition-transform duration-200 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+            className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-100/50 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col`}
         >
-            <div className="flex items-center justify-between h-16 px-6 border-b border-slate-200">
+            <div className="flex items-center justify-between h-20 px-8 border-b border-slate-50">
                 <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
-                        <span className="text-xs font-bold text-indigo-600">
-                            {user?.name ? user.name.charAt(0).toUpperCase() : 'L'}
+                    <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
+                        <span className="text-[11px] font-bold text-white">
+                            {user?.name ? user.name.charAt(0).toUpperCase() : 'R'}
                         </span>
                     </div>
                     <div className="flex flex-col">
-                        <h1 className="text-sm font-semibold text-slate-900">{user?.name || 'Lead CRM'}</h1>
-                        <span className="text-xs text-slate-500">{user?.email || 'Welcome'}</span>
+                        <h1 className="text-sm font-bold text-slate-900 tracking-tight">{user?.name || 'Rahbaan'}</h1>
+                        <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">CRM Console</span>
                     </div>
                 </div>
                 <button
                     onClick={onClose}
-                    className="lg:hidden text-slate-400 hover:text-slate-600 transition-colors"
+                    className="lg:hidden text-slate-400 hover:text-primary transition-colors"
                 >
-                    <X className="h-5 w-5" />
+                    <X className="h-4 w-4" />
                 </button>
             </div>
-            <nav className="mt-6 px-3">
-                <div className="space-y-1">
-                    {navigationItems.map((item) => {
-                        const Icon = item.icon;
-                        const active = isActive(item.href);
-                        return (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors ${active
-                                    ? 'text-slate-900 bg-slate-100'
-                                    : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+
+            <nav className="flex-1 mt-6 px-4 space-y-1">
+                {navigationItems.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.href);
+                    return (
+                        <Link
+                            key={item.name}
+                            href={item.href}
+                            className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-all duration-300 relative group ${active
+                                ? 'sidebar-link-active text-primary'
+                                : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                                }`}
+                        >
+                            <Icon
+                                className={`h-4 w-4 mr-4 transition-all duration-300 stroke-[2px] ${active ? 'text-primary' : 'text-slate-300 group-hover:text-primary'
                                     }`}
-                            >
-                                <Icon
-                                    className={`h-5 w-5 mr-3 ${active ? 'text-slate-700' : 'text-slate-500'
-                                        }`}
-                                />
-                                {item.name}
-                            </Link>
-                        );
-                    })}
-                </div>
+                            />
+                            {item.name}
+                        </Link>
+                    );
+                })}
             </nav>
+
+            <div className="p-8 mt-auto border-t border-slate-50">
+                <div className="flex items-center space-x-3 text-slate-400">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]"></div>
+                    <span className="text-[10px] font-bold uppercase tracking-widest">Active</span>
+                </div>
+            </div>
         </div>
     );
 }

@@ -297,8 +297,8 @@ export default function CalendarPage() {
         if (!currentDate || !selectedDate) {
             return (
                 <div className="flex items-center justify-center py-8">
-                    <Loader2 className="h-5 w-5 animate-spin text-indigo-600 mr-2" />
-                    <span className="text-slate-600">Loading calendar...</span>
+                    <Loader2 className="h-4 w-4 animate-spin text-primary mr-2" />
+                    <span className="text-xs text-slate-500 font-medium">Loading Calendar...</span>
                 </div>
             );
         }
@@ -309,7 +309,7 @@ export default function CalendarPage() {
             <div className="grid grid-cols-7 text-black gap-1">
                 {/* Day headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                    <div key={day} className="p-2 text-center text-xs font-medium text-slate-500 bg-slate-50">
+                    <div key={day} className="p-3 text-center text-[11px] font-bold text-slate-500 bg-slate-50 border border-border">
                         {day}
                     </div>
                 ))}
@@ -326,20 +326,20 @@ export default function CalendarPage() {
                             key={index}
                             onClick={() => setSelectedDate(day)}
                             className={`
-                                min-h-[80px] p-1 border border-slate-100 cursor-pointer hover:bg-slate-50 transition-colors
-                                ${!isCurrentMonth ? 'text-slate-300 bg-slate-25' : ''}
-                                ${isToday ? 'bg-indigo-50 border-indigo-200' : ''}
-                                ${isSelected ? 'ring-2 ring-indigo-500 bg-indigo-50' : ''}
+                                min-h-[100px] p-2 border border-border cursor-pointer hover:bg-slate-50 transition-all
+                                ${!isCurrentMonth ? 'text-slate-200 bg-slate-50/30' : ''}
+                                ${isToday ? 'bg-blue-50/30 border-primary/20' : ''}
+                                ${isSelected ? 'ring-1 ring-primary bg-blue-50/20' : ''}
                             `}
                         >
-                            <div className={`text-sm font-medium mb-1 ${isToday ? 'text-indigo-600' : ''}`}>
+                            <div className={`text-xs font-bold mb-3 ${isToday ? 'text-primary' : 'text-slate-400'}`}>
                                 {day.getDate()}
                             </div>
                             <div className="space-y-1">
                                 {dayMeetings.slice(0, 2).map((meeting, idx) => (
                                     <div
                                         key={idx}
-                                        className="text-xs bg-indigo-100 text-indigo-700 px-1 py-0.5 rounded truncate"
+                                        className="text-[10px] font-semibold bg-blue-50 text-primary border border-primary/10 px-1.5 py-1 rounded truncate"
                                         title={meeting.summary}
                                     >
                                         {meeting.summary}
@@ -360,13 +360,13 @@ export default function CalendarPage() {
 
     return (
         <PrivateRoute>
-            <div className="flex h-screen bg-slate-50">
+            <div className="flex h-screen bg-white">
                 <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
                 <div className="flex-1 flex flex-col overflow-hidden">
                     <Header title="Calendar" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-12">
                         {/* Google Connection Status */}
                         <div className="mb-6">
                             <GoogleConnectionStatus 
@@ -376,13 +376,13 @@ export default function CalendarPage() {
 
                         {!isClient || !currentDate || !selectedDate ? (
                             <div className="flex items-center justify-center py-12">
-                                <Loader2 className="h-8 w-8 animate-spin text-indigo-600 mr-2" />
-                                <span className="text-slate-600">Loading calendar...</span>
+                                <Loader2 className="h-8 w-8 animate-spin text-primary mr-2" />
+                                <span className="text-slate-500 font-medium text-sm">Loading calendar...</span>
                             </div>
                         ) : (
                             <>
                                 {/* Calendar Header */}
-                                <div className="bg-white rounded-lg border border-slate-200 p-6 mb-6">
+                                <div className="bg-white rounded-xl border border-border p-8 mb-8">
                             <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center space-x-4">
                                     <div className="flex items-center space-x-2">
@@ -392,7 +392,7 @@ export default function CalendarPage() {
                                         >
                                             <ChevronLeft className="h-4 w-4" />
                                         </button>
-                                        <h1 className="text-xl font-bold text-slate-900">
+                                        <h1 className="text-lg font-bold text-[#1A1A1A]">
                                             {currentDate.toLocaleDateString('en-US', { 
                                                 month: 'long', 
                                                 year: 'numeric' 
@@ -412,9 +412,9 @@ export default function CalendarPage() {
                                             setCurrentDate(today);
                                             setSelectedDate(today);
                                         }}
-                                        className="px-3 py-1.5 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                                        className="px-6 py-2 text-xs font-bold text-primary hover:bg-primary/5 rounded-lg transition-all"
                                     >
-                                        Today
+                                        Current
                                     </button>
                                 </div>
 
@@ -424,26 +424,26 @@ export default function CalendarPage() {
                                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                                         <input
                                             type="text"
-                                            placeholder="Search meetings..."
+                                            placeholder="Search schedule..."
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="pl-10 pr-4 py-2 text-sm text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                            className="pl-10 pr-4 py-2.5 text-xs font-medium search-input focus:bg-white w-64"
                                         />
                                     </div>
 
                                     {/* View Mode Selector */}
-                                    <div className="flex bg-slate-100 rounded-lg p-1">
+                                    <div className="flex bg-slate-50 border border-border rounded-lg p-1">
                                         {(['month', 'list'] as ViewMode[]).map((mode) => (
                                             <button
                                                 key={mode}
                                                 onClick={() => setViewMode(mode)}
-                                                className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors capitalize ${
+                                                className={`px-6 py-2 text-xs font-bold rounded-md transition-all ${
                                                     viewMode === mode
-                                                        ? 'bg-white text-slate-900 shadow-sm'
-                                                        : 'text-slate-600 hover:text-slate-900'
+                                                        ? 'bg-white text-[#1A1A1A] shadow-sm border border-border'
+                                                        : 'text-slate-500 hover:text-[#1A1A1A]'
                                                 }`}
                                             >
-                                                {mode}
+                                                {mode === 'month' ? 'Calendar' : 'List'}
                                             </button>
                                         ))}
                                     </div>
@@ -451,10 +451,10 @@ export default function CalendarPage() {
                                     {/* Create Meeting Button */}
                                     <button
                                         onClick={() => setShowCreateModal(true)}
-                                        className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors"
+                                        className="inline-flex items-center px-8 py-2.5 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/10"
                                     >
                                         <Plus className="h-4 w-4 mr-2" />
-                                        New Meeting
+                                        Create Event
                                     </button>
                                 </div>
                             </div>
@@ -467,19 +467,19 @@ export default function CalendarPage() {
                                 <div className="bg-white rounded-lg border border-slate-200 p-6">
                                     {viewMode === 'month' ? (
                                         <div>
-                                            <h2 className="text-lg font-semibold text-slate-900 mb-4">
-                                                Calendar View
+                                            <h2 className="text-sm font-bold text-[#1A1A1A] mb-6 border-b border-slate-50 pb-4">
+                                                Schedule Matrix
                                             </h2>
                                             {renderCalendarGrid()}
                                         </div>
                                     ) : (
                                         <div>
-                                            <h2 className="text-lg font-semibold text-slate-900 mb-4">
-                                                Meeting List
+                                            <h2 className="text-sm font-bold text-[#1A1A1A] mb-6 border-b border-slate-50 pb-4">
+                                                Agenda View
                                             </h2>
                                             {loading ? (
                                                 <div className="flex items-center justify-center py-12">
-                                                    <Loader2 className="h-6 w-6 animate-spin text-indigo-600 mr-2" />
+                                                    <Loader2 className="h-6 w-6 animate-spin text-teal-600 mr-2" />
                                                     <span className="text-slate-600">Loading meetings...</span>
                                                 </div>
                                             ) : sortedFilteredMeetings.length === 0 ? (
@@ -512,7 +512,7 @@ export default function CalendarPage() {
                                                                                 {meeting.summary}
                                                                             </h3>
                                                                             {isToday && (
-                                                                                <span className="px-2 py-1 bg-indigo-100 text-indigo-700 text-xs font-medium rounded-full">
+                                                                                <span className="px-2 py-1 bg-teal-100 text-teal-700 text-xs font-medium rounded-full">
                                                                                     Today
                                                                                 </span>
                                                                             )}
@@ -561,7 +561,7 @@ export default function CalendarPage() {
                                                                                 className={`inline-flex items-center px-3 py-1.5 text-sm font-medium rounded-lg transition-colors ${
                                                                                     isPast 
                                                                                         ? 'bg-slate-100 text-slate-600 hover:bg-slate-200' 
-                                                                                        : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                                                                                        : 'bg-teal-100 text-teal-700 hover:bg-teal-200'
                                                                                 }`}
                                                                             >
                                                                                 <Video className="h-4 w-4 mr-1" />
@@ -605,7 +605,7 @@ export default function CalendarPage() {
                                             getLocalMeetingsForDate(selectedDate).map((meeting) => (
                                                 <div
                                                     key={meeting.id}
-                                                    className="text-sm p-2 bg-indigo-50 rounded border-l-2 border-indigo-200"
+                                                    className="text-sm p-2 bg-teal-50 rounded border-l-2 border-teal-200"
                                                 >
                                                     <div className="font-medium text-slate-900">{meeting.summary}</div>
                                                     <div className="text-slate-600 text-xs">
@@ -670,7 +670,7 @@ export default function CalendarPage() {
                                                     type="text"
                                                     value={newMeeting.title}
                                                     onChange={(e) => setNewMeeting(prev => ({ ...prev, title: e.target.value }))}
-                                                    className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                                     required
                                                 />
                                             </div>
@@ -683,7 +683,7 @@ export default function CalendarPage() {
                                                     value={newMeeting.description}
                                                     onChange={(e) => setNewMeeting(prev => ({ ...prev, description: e.target.value }))}
                                                     rows={3}
-                                                    className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                    className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                                 />
                                             </div>
 
@@ -696,7 +696,7 @@ export default function CalendarPage() {
                                                         type="datetime-local"
                                                         value={newMeeting.startTime}
                                                         onChange={(e) => setNewMeeting(prev => ({ ...prev, startTime: e.target.value }))}
-                                                        className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                        className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                                         required
                                                     />
                                                 </div>
@@ -708,7 +708,7 @@ export default function CalendarPage() {
                                                         type="datetime-local"
                                                         value={newMeeting.endTime}
                                                         onChange={(e) => setNewMeeting(prev => ({ ...prev, endTime: e.target.value }))}
-                                                        className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                        className="w-full px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                                         required
                                                     />
                                                 </div>
@@ -737,7 +737,7 @@ export default function CalendarPage() {
                                                             value={newMeeting.newParticipant}
                                                             onChange={(e) => setNewMeeting(prev => ({ ...prev, newParticipant: e.target.value }))}
                                                             placeholder="Add participant email..."
-                                                            className="flex-1 px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                                            className="flex-1 px-3 py-2 text-black border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                                                         />
                                                         <button
                                                             type="button"
@@ -761,7 +761,7 @@ export default function CalendarPage() {
                                                 <button
                                                     type="submit"
                                                     disabled={createLoading}
-                                                    className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 flex items-center"
+                                                    className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50 flex items-center"
                                                 >
                                                     {createLoading ? (
                                                         <>
@@ -831,7 +831,7 @@ export default function CalendarPage() {
                                                         href={selectedMeeting.meetLink}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+                                                        className="inline-flex items-center px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700"
                                                     >
                                                         <Video className="h-4 w-4 mr-2" />
                                                         Join Meeting

@@ -33,7 +33,7 @@ export default function PipelinePage() {
         try {
             setLoading(true);
             const data = await pipelineService.getPipelineData();
-            
+
             // Define stage configuration
             const stageConfig = [
                 { name: 'New', bgColor: 'bg-slate-50', textColor: 'text-slate-700', borderColor: 'border-slate-200' },
@@ -45,25 +45,22 @@ export default function PipelinePage() {
                 { name: 'Won', bgColor: 'bg-green-50', textColor: 'text-green-700', borderColor: 'border-green-200' },
                 { name: 'Lost', bgColor: 'bg-red-50', textColor: 'text-red-700', borderColor: 'border-red-200' }
             ];
-            
+
             // Map API data to match the expected format
             const mappedData = stageConfig.map((stageInfo) => {
                 const apiStage = data.find(d => d.stage === stageInfo.name);
                 return {
                     stage: {
                         name: stageInfo.name,
-                        count: apiStage?.count || 0,
-                        bgColor: stageInfo.bgColor,
-                        textColor: stageInfo.textColor,
-                        borderColor: stageInfo.borderColor
+                        count: apiStage?.count || 0
                     },
                     leads: apiStage?.leads.map((lead: any) => ({
                         id: lead.id,
                         name: lead.name || 'Unknown',
-                        company: lead.email || '',
-                        value: '$0',
-                        status: lead.stage,
-                        priority: 'Medium' as 'High' | 'Medium' | 'Low',
+                        company: lead.company || '', // Fixed: use company instead of email twice if possible, or just stay consistent
+                        value: lead.value || '$0',
+                        stage: lead.stage, // Fixed: use stage instead of status
+                        priority: lead.priority || 'Medium',
                         lastContact: lead.last_message_at || lead.updated_at,
                         phone: lead.phone,
                         email: lead.email,
@@ -72,7 +69,7 @@ export default function PipelinePage() {
                     })) || []
                 };
             });
-            
+
             setLeadsByStage(mappedData);
             setError(null);
         } catch (err: any) {
@@ -87,7 +84,7 @@ export default function PipelinePage() {
         try {
             setUpdating(true);
             await pipelineService.updateLeadStage(leadId, newStage);
-            
+
             // Show success notification
             if (leadName && fromStage) {
                 setNotification({
@@ -96,7 +93,7 @@ export default function PipelinePage() {
                     toStage: newStage
                 });
             }
-            
+
             // Refresh data after update
             await fetchPipelineData();
         } catch (err: any) {
@@ -110,7 +107,7 @@ export default function PipelinePage() {
     const handleDragStart = (event: DragStartEvent) => {
         const { active } = event;
         const leadId = parseInt(active.id.toString());
-        
+
         // Find the lead being dragged
         for (const stageData of leadsByStage) {
             const lead = stageData.leads.find((l: any) => l.id === leadId);
@@ -123,56 +120,67 @@ export default function PipelinePage() {
 
     const handleDragOver = (event: DragOverEvent) => {
         const { active, over } = event;
-        
         if (!over) return;
-        
+
         const activeId = active.id.toString();
         const overId = over.id.toString();
-        
-        // Find which stage the active lead is in
-        const activeStageIndex = leadsByStage.findIndex(stage => 
-            stage.leads.some((lead: any) => lead.id.toString() === activeId)
-        );
-        
-        // Find which stage we're over
-        const overStageIndex = leadsByStage.findIndex(stage => stage.stage.name === overId);
-        
-        if (activeStageIndex === -1 || overStageIndex === -1) return;
-        if (activeStageIndex === overStageIndex) return;
-        
+
         // Move lead between stages
         setLeadsByStage(prev => {
+            const activeStageIndex = prev.findIndex(stage =>
+                stage.leads.some((lead: any) => lead.id.toString() === activeId)
+            );
+
+            // Find which stage we're over - it could be a stage name OR a lead ID
+            let overStageIndex = prev.findIndex(stage => stage.stage.name === overId);
+            
+            // If we didn't find the stage by name, we might be over a lead. Find that lead's stage.
+            if (overStageIndex === -1) {
+                overStageIndex = prev.findIndex(stage =>
+                    stage.leads.some((lead: any) => lead.id.toString() === overId)
+                );
+            }
+
+            if (activeStageIndex === -1 || overStageIndex === -1) return prev;
+            if (activeStageIndex === overStageIndex) return prev;
+
             const newStages = [...prev];
-            const activeStage = newStages[activeStageIndex];
-            const overStage = newStages[overStageIndex];
-            
+            const activeStage = { ...newStages[activeStageIndex], leads: [...newStages[activeStageIndex].leads] };
+            const overStage = { ...newStages[overStageIndex], leads: [...newStages[overStageIndex].leads] };
+
             const leadIndex = activeStage.leads.findIndex((lead: any) => lead.id.toString() === activeId);
+            if (leadIndex === -1) return prev;
+
             const [movedLead] = activeStage.leads.splice(leadIndex, 1);
-            
+            if (!movedLead) return prev;
+
             // Update lead stage
-            movedLead.stage = overStage.stage.name;
-            
+            const updatedLead = { ...movedLead, stage: overStage.stage.name };
+
             // Add to new stage
-            overStage.leads.push(movedLead);
-            
+            overStage.leads.push(updatedLead);
+
             // Update counts
-            activeStage.stage.count = activeStage.leads.length;
-            overStage.stage.count = overStage.leads.length;
-            
+            activeStage.stage = { ...activeStage.stage, count: activeStage.leads.length };
+            overStage.stage = { ...overStage.stage, count: overStage.leads.length };
+
+            newStages[activeStageIndex] = activeStage;
+            newStages[overStageIndex] = overStage;
+
             return newStages;
         });
     };
 
     const handleDragEnd = async (event: DragEndEvent) => {
         const { active, over } = event;
-        
+
         setActiveLead(null);
-        
+
         if (!over) return;
-        
+
         const leadId = parseInt(active.id.toString());
         const newStage = over.id.toString();
-        
+
         // Check if it's a stage (not another lead)
         const stageNames = leadsByStage.map(s => s.stage.name);
         if (stageNames.includes(newStage)) {
@@ -187,20 +195,20 @@ export default function PipelinePage() {
                     break;
                 }
             }
-            
+
             // Update in backend
             await handleStageChange(leadId, newStage, leadName, fromStage);
         }
     };
 
     return (
-        <div className="flex h-screen bg-slate-50">
+        <div className="flex h-screen bg-background">
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
             <div className="flex-1 flex flex-col overflow-hidden">
-                <Header title="Pipeline Board" onMenuClick={() => setSidebarOpen(true)} />
+                <Header title="Sales Pipeline" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
                     <PipelineControls
                         isDragEnabled={isDragEnabled}
                         onToggleDrag={setIsDragEnabled}
@@ -210,8 +218,8 @@ export default function PipelinePage() {
                     />
 
                     {updating && (
-                        <div className="mb-4 flex items-center justify-center space-x-2 text-sm text-indigo-600 bg-indigo-50 border border-indigo-200 rounded-lg p-3">
-                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600"></div>
+                        <div className="mb-4 flex items-center justify-center space-x-2 text-sm text-[#0066FF] bg-blue-50 border border-blue-100 rounded-lg p-3">
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#0066FF]"></div>
                             <span>Updating lead stage...</span>
                         </div>
                     )}

@@ -235,7 +235,7 @@ export default function MeetingScheduler({ lead, onMeetingCreated, onError }: Me
                     id="clearLeadFields"
                     checked={clearLeadFields}
                     onChange={(e) => setClearLeadFields(e.target.checked)}
-                    className="h-3 w-3 text-indigo-600 border-slate-300 rounded focus:ring-indigo-500"
+                    className="h-3 w-3 text-teal-600 border-slate-300 rounded focus:ring-teal-500"
                 />
                 <label htmlFor="clearLeadFields" className="text-xs text-slate-600">
                     Update lead status to "Contacted" after meeting creation
@@ -246,7 +246,7 @@ export default function MeetingScheduler({ lead, onMeetingCreated, onError }: Me
             <button
                 type="submit"
                 disabled={meetingLoading || !meetingStart || !meetingEnd}
-                className="w-full mt-3 inline-flex items-center justify-center px-4 py-2.5 text-xs font-medium rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+                className="w-full mt-3 inline-flex items-center justify-center px-4 py-2.5 text-xs font-medium rounded-lg bg-teal-600 text-white hover:bg-teal-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
             >
                 {meetingLoading ? (
                     <>

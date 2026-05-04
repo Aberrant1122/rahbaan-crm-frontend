@@ -53,48 +53,48 @@ export default function AllUsersPage() {
     const getRoleBadge = (role: string) => {
         if (role === 'admin') {
             return (
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 border border-purple-200">
-                    <Shield className="h-3 w-3 mr-1" />
+                <span className="inline-flex items-center px-3 py-1 rounded text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                    <Shield className="h-3 w-3 mr-1.5" />
                     Admin
                 </span>
             );
         }
         return (
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 border border-blue-200">
-                <User className="h-3 w-3 mr-1" />
-                User
+            <span className="inline-flex items-center px-3 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+                <User className="h-3 w-3 mr-1.5" />
+                Standard User
             </span>
         );
     };
 
     return (
-        <div className="flex h-screen bg-slate-50">
+        <div className="flex h-screen bg-background">
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
             <div className="flex-1 flex flex-col overflow-hidden">
-                <Header title="All Users" onMenuClick={() => setSidebarOpen(true)} />
+                <Header title="User Directory" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
                     <div className="max-w-6xl mx-auto">
                         {/* Page Header */}
-                        <div className="mb-6">
-                            <div className="flex items-center space-x-3 mb-2">
-                                <div className="p-2 bg-indigo-100 rounded-lg">
-                                    <UsersIcon className="h-6 w-6 text-indigo-600" />
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-bold text-slate-900">All Users</h2>
-                                    <p className="text-sm text-slate-600">
-                                        {loading ? 'Loading...' : `${users.length} total users`}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                         <div className="mb-10">
+                             <div className="flex items-center space-x-4 mb-4">
+                                 <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                                     <UsersIcon className="h-6 w-6 text-slate-600 stroke-[2px]" />
+                                 </div>
+                                 <div>
+                                     <h2 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">System Users</h2>
+                                     <p className="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-widest">
+                                         {loading ? 'Loading...' : `${users.length} registered users`}
+                                     </p>
+                                 </div>
+                             </div>
+                         </div>
 
                         {/* Loading State */}
                         {loading && (
                             <div className="flex items-center justify-center py-16">
-                                <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+                                <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
                                 <span className="ml-3 text-slate-600 font-medium">Loading users...</span>
                             </div>
                         )}
@@ -112,72 +112,72 @@ export default function AllUsersPage() {
 
                         {/* Users Table */}
                         {!loading && !error && (
-                            <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+                            <div className="glass-card overflow-hidden">
                                 <div className="overflow-x-auto">
-                                    <table className="min-w-full divide-y divide-slate-200">
-                                        <thead className="bg-slate-50">
-                                            <tr>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                                    User
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                                    Email
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                                    Role
-                                                </th>
-                                                <th className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                                    Created
-                                                </th>
-                                                <th className="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                                    Actions
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="bg-white divide-y divide-slate-200">
+                                    <table className="min-w-full divide-y divide-border">
+                                         <thead className="bg-slate-50/50">
+                                             <tr>
+                                                 <th className="px-8 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                     User Identity
+                                                 </th>
+                                                 <th className="px-8 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                     Auth Email
+                                                 </th>
+                                                 <th className="px-8 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                     Clearance Level
+                                                 </th>
+                                                 <th className="px-8 py-5 text-left text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                     Deployment Date
+                                                 </th>
+                                                 <th className="px-8 py-5 text-right text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                                     Termination
+                                                 </th>
+                                             </tr>
+                                         </thead>
+                                         <tbody className="bg-white divide-y divide-slate-50">
                                             {users.length === 0 ? (
                                                 <tr>
-                                                    <td colSpan={5} className="px-6 py-12 text-center">
-                                                        <UsersIcon className="h-12 w-12 text-slate-400 mx-auto mb-3" />
-                                                        <p className="text-slate-600">No users found</p>
+                                                    <td colSpan={5} className="px-8 py-16 text-center">
+                                                        <UsersIcon className="h-10 w-10 text-slate-200 mx-auto mb-4" />
+                                                        <p className="text-xs text-slate-400 font-bold">No users found</p>
                                                     </td>
                                                 </tr>
                                             ) : (
                                                 users.map((user) => (
-                                                    <tr key={user.id} className="hover:bg-slate-50 transition-colors">
-                                                        <td className="px-6 py-4 whitespace-nowrap">
+                                                    <tr key={user.id} className="hover:bg-slate-50/50 transition-colors group">
+                                                        <td className="px-8 py-5 whitespace-nowrap">
                                                             <div className="flex items-center">
-                                                                <div className="h-10 w-10 flex-shrink-0">
-                                                                    <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                                                                        <span className="text-sm font-medium text-indigo-600">
+                                                                <div className="h-9 w-9 flex-shrink-0">
+                                                                    <div className="h-9 w-9 rounded-lg bg-slate-50 border border-border flex items-center justify-center group-hover:border-primary transition-all">
+                                                                        <span className="text-[11px] font-bold text-[#1A1A1A] group-hover:text-primary">
                                                                             {user.name.charAt(0).toUpperCase()}
                                                                         </span>
                                                                     </div>
                                                                 </div>
                                                                 <div className="ml-4">
-                                                                    <div className="text-sm font-medium text-slate-900">
+                                                                    <div className="text-xs font-bold text-[#1A1A1A]">
                                                                         {user.name}
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="text-sm text-slate-900">{user.email}</div>
+                                                        <td className="px-8 py-5 whitespace-nowrap">
+                                                            <div className="text-[11px] font-medium text-slate-500">{user.email}</div>
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
+                                                        <td className="px-8 py-5 whitespace-nowrap">
                                                             {getRoleBadge(user.role)}
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                                        <td className="px-8 py-5 whitespace-nowrap text-xs font-medium text-slate-500">
                                                             {new Date(user.created_at).toLocaleDateString()}
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                        <td className="px-8 py-5 whitespace-nowrap text-right text-[10px] font-medium">
                                                             <button
                                                                 onClick={() => handleDelete(user.id)}
                                                                 disabled={deletingId === user.id}
-                                                                className="text-red-600 hover:text-red-900 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center"
+                                                                className="text-danger hover:scale-110 disabled:opacity-30 transition-all inline-flex items-center"
                                                             >
                                                                 {deletingId === user.id ? (
-                                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                                    <Loader2 className="h-3 w-3 animate-spin" />
                                                                 ) : (
                                                                     <Trash2 className="h-4 w-4" />
                                                                 )}

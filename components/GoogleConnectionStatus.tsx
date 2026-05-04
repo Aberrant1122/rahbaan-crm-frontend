@@ -140,7 +140,7 @@ export default function GoogleConnectionStatus({ onConnectionChange }: GoogleCon
             </div>
             <button
                 onClick={handleConnect}
-                className="flex items-center space-x-1 px-3 py-1.5 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition-colors"
+                className="flex items-center space-x-1 px-3 py-1.5 bg-teal-600 text-white text-sm rounded-md hover:bg-teal-700 transition-colors"
             >
                 <ExternalLink className="h-3 w-3" />
                 <span>Connect Google</span>

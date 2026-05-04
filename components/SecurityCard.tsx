@@ -121,23 +121,23 @@ export default function SecurityCard() {
     };
 
     return (
-        <div className="bg-white rounded-lg border border-slate-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-green-50 rounded-lg">
-                        <Shield className="h-5 w-5 text-green-600" />
+        <div className="glass-card p-8">
+            <div className="flex items-center justify-between mb-10">
+                <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl">
+                        <Shield className="h-5 w-5 text-slate-600 stroke-[2px]" />
                     </div>
                     <div>
-                        <h3 className="text-base font-semibold text-slate-900">Security Settings</h3>
-                        <p className="text-sm text-slate-600">Manage your account security and personal information</p>
+                        <h3 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">Security Credentials</h3>
+                        <p className="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-widest">Identity & Access Management</p>
                     </div>
                 </div>
                 {!isEditing && (
                     <button
                         onClick={() => setIsEditing(true)}
-                        className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg transition-colors"
+                        className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-primary hover:bg-primary hover:text-white border border-primary rounded-xl transition-all shadow-sm"
                     >
-                        Edit Profile
+                        Modify Profile
                     </button>
                 )}
             </div>
@@ -162,8 +162,8 @@ export default function SecurityCard() {
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Name Field */}
                     <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-2">
-                            Full Name
+                        <label htmlFor="name" className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">
+                            Full Identity
                         </label>
                         <div className="relative">
                             <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -173,44 +173,44 @@ export default function SecurityCard() {
                                 name="name"
                                 value={formData.name}
                                 onChange={handleChange}
-                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-                                    errors.name ? 'border-red-300 bg-red-50' : 'border-slate-300 bg-white'
+                                className={`w-full pl-10 pr-4 py-3 text-[11px] font-medium transition-all ${
+                                    errors.name ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
                                 }`}
-                                placeholder="Enter your full name"
+                                placeholder="Legal Name"
                             />
                         </div>
                         {errors.name && (
-                            <p className="text-xs text-red-600 mt-1">{errors.name}</p>
+                            <p className="text-[10px] text-danger font-bold uppercase tracking-widest mt-2">{errors.name}</p>
                         )}
                     </div>
 
                     {/* Email Field */}
                     <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-2">
-                            Email Address
+                        <label htmlFor="email" className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3">
+                            Auth Email
                         </label>
                         <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                            <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className={`w-full pl-10 pr-4 py-2.5 border text-gray-900 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-                                    errors.email ? 'border-red-300 bg-red-50' : 'border-slate-300 bg-white'
+                                className={`w-full pl-11 pr-4 py-3 text-[11px] font-medium transition-all rounded-xl ${
+                                    errors.email ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input'
                                 }`}
-                                placeholder="Enter your email address"
+                                placeholder="auth@system.com"
                             />
                         </div>
                         {errors.email && (
-                            <p className="text-xs text-red-600 mt-1">{errors.email}</p>
+                            <p className="text-[10px] text-danger font-bold uppercase tracking-widest mt-2">{errors.email}</p>
                         )}
                     </div>
 
                     {/* Password Change Section */}
-                    <div className="pt-4 border-t border-slate-200">
-                        <h4 className="text-sm font-medium text-slate-900 mb-3">Change Password (Optional)</h4>
+                    <div className="pt-8 border-t border-border">
+                        <h4 className="text-[10px] font-bold text-[#1A1A1A] uppercase tracking-widest mb-6">Security Rotation</h4>
                         
                         {/* Current Password */}
                         <div className="mb-4">
@@ -225,10 +225,10 @@ export default function SecurityCard() {
                                     name="currentPassword"
                                     value={formData.currentPassword}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-12 py-2.5 border text-gray-900 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-                                        errors.currentPassword ? 'border-red-300 bg-red-50' : 'border-slate-300 bg-white'
+                                    className={`w-full pl-10 pr-12 py-3 text-[11px] font-medium transition-all ${
+                                        errors.currentPassword ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
                                     }`}
-                                    placeholder="Enter current password"
+                                    placeholder="Current Authentication Key"
                                 />
                                 <button
                                     type="button"
@@ -256,10 +256,10 @@ export default function SecurityCard() {
                                     name="newPassword"
                                     value={formData.newPassword}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-12 py-2.5 text-gray-900 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-                                        errors.newPassword ? 'border-red-300 bg-red-50' : 'border-slate-300 bg-white'
+                                    className={`w-full pl-10 pr-12 py-3 text-[11px] font-medium transition-all ${
+                                        errors.newPassword ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
                                     }`}
-                                    placeholder="Enter new password"
+                                    placeholder="New Secure Key"
                                 />
                                 <button
                                     type="button"
@@ -287,10 +287,10 @@ export default function SecurityCard() {
                                     name="confirmPassword"
                                     value={formData.confirmPassword}
                                     onChange={handleChange}
-                                    className={`w-full pl-10 pr-4 py-2.5 border text-gray-900 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
-                                        errors.confirmPassword ? 'border-red-300 bg-red-50' : 'border-slate-300 bg-white'
+                                    className={`w-full pl-10 pr-4 py-3 text-[11px] font-medium transition-all ${
+                                        errors.confirmPassword ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
                                     }`}
-                                    placeholder="Confirm new password"
+                                    placeholder="Confirm Key Rotation"
                                 />
                             </div>
                             {errors.confirmPassword && (
@@ -300,27 +300,27 @@ export default function SecurityCard() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex items-center justify-end space-x-3 pt-4">
+                    <div className="flex items-center justify-end space-x-4 pt-8">
                         <button
                             type="button"
                             onClick={handleCancel}
                             disabled={loading}
-                            className="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50"
+                            className="px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
                             disabled={loading}
-                            className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors disabled:opacity-50 flex items-center"
+                            className="px-8 py-2.5 text-[10px] font-bold uppercase tracking-widest text-white bg-primary rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20 flex items-center"
                         >
                             {loading ? (
                                 <>
-                                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                    Updating...
+                                    <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                    Synchronizing...
                                 </>
                             ) : (
-                                'Update Profile'
+                                'Commit Changes'
                             )}
                         </button>
                     </div>

@@ -153,21 +153,21 @@ export default function AddLeadPage() {
     };
 
     return (
-        <div className="flex h-screen bg-slate-50">
+        <div className="flex h-screen bg-background">
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="Add New Lead" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
                     <div className="max-w-4xl mx-auto">
                         {/* Back Button */}
                         <button
                             onClick={() => router.back()}
-                            className="flex items-center text-slate-600 hover:text-slate-900 mb-6 transition-colors"
+                            className="flex items-center text-slate-400 hover:text-slate-900 mb-10 transition-all group"
                         >
-                            <ArrowLeft className="h-4 w-4 mr-2" />
-                            <span className="text-sm font-medium">Back</span>
+                            <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+                            <span className="text-[11px] font-bold uppercase tracking-widest">Back to Directory</span>
                         </button>
 
                         {/* Success Message */}
@@ -196,39 +196,37 @@ export default function AddLeadPage() {
                         )}
 
                         {/* Form Card */}
-                        <div className="bg-white rounded-lg border border-slate-200 shadow-sm">
-                            <div className="border-b border-slate-200 px-6 py-4">
-                                <h2 className="text-lg font-semibold text-slate-900">
-                                    Lead Information
-                                </h2>
-                                <p className="text-sm text-slate-500 mt-1">
-                                    Fill in the details to create a new lead
+                        <div className="glass-card overflow-hidden">
+                            <div className="border-b border-slate-50 px-8 py-6 bg-slate-50/30">
+                                <h2 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">Lead Information</h2>
+                                <p className="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-widest">
+                                    Enter the core details to initialize a new lead.
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-6">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-black">
+                            <form onSubmit={handleSubmit} className="p-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 text-black">
                                     {/* Name */}
                                     <div>
                                         <label
                                             htmlFor="name"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
-                                            Full Name <span className="text-red-500">*</span>
+                                            Full Name <span className="text-danger">*</span>
                                         </label>
                                         <div className="relative">
-                                            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                            <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                                             <input
                                                 type="text"
                                                 id="name"
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${errors.name
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                className={`w-full pl-11 pr-4 py-3 text-[11px] font-medium transition-all rounded-xl ${errors.name
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input'
                                                     }`}
-                                                placeholder="John Doe"
+                                                placeholder="Legal Name"
                                             />
                                         </div>
                                         {errors.name && (
@@ -243,7 +241,7 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="email"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
                                             Email Address
                                         </label>
@@ -255,11 +253,11 @@ export default function AddLeadPage() {
                                                 name="email"
                                                 value={formData.email}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${errors.email
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                className={`w-full pl-10 pr-4 py-3 text-[11px] font-medium transition-all ${errors.email
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input focus:bg-white'
                                                     }`}
-                                                placeholder="john@example.com"
+                                                placeholder="primary@domain.com"
                                             />
                                         </div>
                                         {errors.email && (
@@ -274,9 +272,9 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="phone"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
-                                            Phone Number <span className="text-red-500">*</span>
+                                            Phone Number <span className="text-danger">*</span>
                                         </label>
                                         <div className="relative">
                                             <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -286,11 +284,11 @@ export default function AddLeadPage() {
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${errors.phone
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                className={`w-full pl-10 pr-4 py-3 text-[11px] font-medium transition-all ${errors.phone
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input focus:bg-white'
                                                     }`}
-                                                placeholder="+1 234 567 890"
+                                                placeholder="012 345 6789"
                                             />
                                         </div>
                                         {errors.phone && (
@@ -305,9 +303,9 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="company"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
-                                            Company Name <span className="text-red-500">*</span>
+                                            Company Name <span className="text-danger">*</span>
                                         </label>
                                         <div className="relative">
                                             <Building2 className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
@@ -317,11 +315,11 @@ export default function AddLeadPage() {
                                                 name="company"
                                                 value={formData.company}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${errors.company
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                className={`w-full pl-10 pr-4 py-3 text-[11px] font-medium transition-all ${errors.company
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input focus:bg-white'
                                                     }`}
-                                                placeholder="Tech Corp"
+                                                placeholder="Entity Name"
                                             />
                                         </div>
                                         {errors.company && (
@@ -336,16 +334,16 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="status"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
-                                            Status
+                                            Lead Stage
                                         </label>
                                         <select
                                             id="status"
                                             name="status"
                                             value={formData.status}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                            className="w-full px-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input focus:bg-white appearance-none"
                                         >
                                             {statusOptions.map((option) => (
                                                 <option key={option} value={option}>
@@ -359,7 +357,7 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="priority"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
                                             Priority
                                         </label>
@@ -368,7 +366,7 @@ export default function AddLeadPage() {
                                             name="priority"
                                             value={formData.priority}
                                             onChange={handleChange}
-                                            className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all"
+                                            className="w-full px-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input focus:bg-white appearance-none"
                                         >
                                             {priorityOptions.map((option) => (
                                                 <option key={option} value={option}>
@@ -382,7 +380,7 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="value"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
                                             Deal Value (USD)
                                         </label>
@@ -394,11 +392,11 @@ export default function AddLeadPage() {
                                                 name="value"
                                                 value={formData.value}
                                                 onChange={handleChange}
-                                                className={`w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${errors.value
-                                                        ? 'border-red-300 bg-red-50'
-                                                        : 'border-slate-300 bg-white'
+                                                className={`w-full pl-10 pr-4 py-3 text-[11px] font-bold transition-all ${errors.value
+                                                        ? 'border-red-300 bg-red-50 focus:ring-red-100'
+                                                        : 'search-input focus:bg-white'
                                                     }`}
-                                                placeholder="5000"
+                                                placeholder="0.00"
                                             />
                                         </div>
                                         {errors.value && (
@@ -413,7 +411,7 @@ export default function AddLeadPage() {
                                     <div>
                                         <label
                                             htmlFor="source"
-                                            className="block text-sm font-medium text-slate-700 mb-2"
+                                            className="block text-xs font-semibold text-slate-600 mb-2"
                                         >
                                             Lead Source
                                         </label>
@@ -424,7 +422,7 @@ export default function AddLeadPage() {
                                                 name="source"
                                                 value={formData.source}
                                                 onChange={handleChange}
-                                                className="w-full pl-10 pr-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all appearance-none"
+                                                className="w-full pl-10 pr-4 py-3 text-[11px] font-bold uppercase tracking-widest search-input focus:bg-white appearance-none"
                                             >
                                                 {sourceOptions.map((option) => (
                                                     <option key={option} value={option}>
@@ -437,24 +435,24 @@ export default function AddLeadPage() {
                                 </div>
 
                                 {/* Form Actions */}
-                                <div className="flex items-center justify-end space-x-3 mt-8 pt-6 border-t border-slate-200">
+                                <div className="flex items-center justify-end space-x-4 mt-12 pt-8 border-t border-slate-50">
                                     <button
                                         type="button"
                                         onClick={() => router.back()}
                                         disabled={loading}
-                                        className="px-5 py-2.5 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="px-8 py-2.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-all disabled:opacity-30"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={loading}
-                                        className="px-5 py-2.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                                        className="px-10 py-2.5 text-[10px] font-bold uppercase tracking-widest text-white bg-primary rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                                     >
                                         {loading ? (
                                             <>
-                                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                                Creating...
+                                                <Loader2 className="h-3 w-3 mr-2 animate-spin" />
+                                                Processing...
                                             </>
                                         ) : (
                                             'Create Lead'

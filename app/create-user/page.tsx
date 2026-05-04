@@ -93,24 +93,24 @@ export default function CreateUserPage() {
     };
 
     return (
-        <div className="flex h-screen bg-slate-50">
+        <div className="flex h-screen bg-white">
             <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
             <div className="flex-1 flex flex-col overflow-hidden">
-                <Header title="Create User" onMenuClick={() => setSidebarOpen(true)} />
+                <Header title="Create New User" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 p-6">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-12">
                     <div className="max-w-2xl mx-auto">
                         {/* Page Header */}
-                        <div className="mb-6">
-                            <div className="flex items-center space-x-3 mb-2">
-                                <div className="p-2 bg-blue-100 rounded-lg">
-                                    <UserPlus className="h-6 w-6 text-blue-600" />
+                        <div className="mb-10">
+                            <div className="flex items-center space-x-4 mb-4">
+                                <div className="p-3 bg-slate-50 border border-border rounded-lg">
+                                    <UserPlus className="h-6 w-6 text-[#333333]" />
                                 </div>
                                 <div>
-                                    <h2 className="text-2xl font-bold text-slate-900">Create New User</h2>
-                                    <p className="text-sm text-slate-600">
-                                        Add a new user to the system
+                                    <h2 className="text-lg font-bold text-[#1A1A1A]">Create User Profile</h2>
+                                    <p className="text-sm text-slate-500 mt-1 font-medium">
+                                        Establish new access credentials for a system user.
                                     </p>
                                 </div>
                             </div>
@@ -139,12 +139,12 @@ export default function CreateUserPage() {
                         )}
 
                         {/* Form */}
-                        <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6">
+                        <div className="bg-white rounded-xl border border-border shadow-sm p-8">
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 {/* Name Field */}
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
-                                        Full Name <span className="text-red-500">*</span>
+                                    <label htmlFor="name" className="block text-xs font-semibold text-slate-600 mb-2">
+                                        Full Name <span className="text-danger">*</span>
                                     </label>
                                     <input
                                         id="name"
@@ -152,17 +152,17 @@ export default function CreateUserPage() {
                                         type="text"
                                         value={formData.name}
                                         onChange={handleChange}
-                                        className={`w-full px-3 py-2 border ${errors.name ? 'border-red-300' : 'border-slate-300'
-                                            } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900`}
-                                        placeholder="John Doe"
+                                        className={`w-full px-4 py-3 text-[11px] font-medium transition-all ${errors.name ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
+                                            }`}
+                                        placeholder="Legal Name"
                                     />
-                                    {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+                                    {errors.name && <p className="mt-2 text-[10px] text-danger font-bold uppercase tracking-widest">{errors.name}</p>}
                                 </div>
 
                                 {/* Email Field */}
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                                        Email Address <span className="text-red-500">*</span>
+                                    <label htmlFor="email" className="block text-xs font-semibold text-slate-600 mb-2">
+                                        Email Address <span className="text-danger">*</span>
                                     </label>
                                     <input
                                         id="email"
@@ -170,17 +170,17 @@ export default function CreateUserPage() {
                                         type="email"
                                         value={formData.email}
                                         onChange={handleChange}
-                                        className={`w-full px-3 py-2 border ${errors.email ? 'border-red-300' : 'border-slate-300'
-                                            } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900`}
-                                        placeholder="john@example.com"
+                                        className={`w-full px-4 py-3 text-[11px] font-medium transition-all ${errors.email ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
+                                            }`}
+                                        placeholder="auth@system.com"
                                     />
-                                    {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                                    {errors.email && <p className="mt-2 text-[10px] text-danger font-bold uppercase tracking-widest">{errors.email}</p>}
                                 </div>
 
                                 {/* Password Field */}
                                 <div>
-                                    <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
-                                        Password <span className="text-red-500">*</span>
+                                    <label htmlFor="password" className="block text-xs font-semibold text-slate-600 mb-2">
+                                        Password <span className="text-danger">*</span>
                                     </label>
                                     <div className="relative">
                                         <input
@@ -189,8 +189,8 @@ export default function CreateUserPage() {
                                             type={showPassword ? 'text' : 'password'}
                                             value={formData.password}
                                             onChange={handleChange}
-                                            className={`w-full px-3 py-2 pr-10 border ${errors.password ? 'border-red-300' : 'border-slate-300'
-                                                } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900`}
+                                            className={`w-full px-4 py-3 pr-10 text-[11px] font-medium transition-all ${errors.password ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
+                                                }`}
                                             placeholder="••••••••"
                                         />
                                         <button
@@ -198,17 +198,17 @@ export default function CreateUserPage() {
                                             onClick={() => setShowPassword(!showPassword)}
                                             className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600"
                                         >
-                                            {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                                            {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                         </button>
                                     </div>
-                                    {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
-                                    <p className="mt-1 text-xs text-slate-500">Must be at least 6 characters</p>
+                                    {errors.password && <p className="mt-2 text-[10px] text-danger font-bold uppercase tracking-widest">{errors.password}</p>}
+                                    <p className="mt-2 text-[9px] text-slate-400 font-bold uppercase tracking-widest">Complexity: Minimum 06 characters</p>
                                 </div>
 
                                 {/* Confirm Password Field */}
                                 <div>
-                                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
-                                        Confirm Password <span className="text-red-500">*</span>
+                                    <label htmlFor="confirmPassword" className="block text-xs font-semibold text-slate-600 mb-2">
+                                        Confirm Password <span className="text-danger">*</span>
                                     </label>
                                     <div className="relative">
                                         <input
@@ -217,8 +217,8 @@ export default function CreateUserPage() {
                                             type={showConfirmPassword ? 'text' : 'password'}
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
-                                            className={`w-full px-3 py-2 pr-10 border ${errors.confirmPassword ? 'border-red-300' : 'border-slate-300'
-                                                } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900`}
+                                            className={`w-full px-4 py-3 pr-10 text-[11px] font-medium transition-all ${errors.confirmPassword ? 'border-red-300 bg-red-50 focus:ring-red-100' : 'search-input focus:bg-white'
+                                                }`}
                                             placeholder="••••••••"
                                         />
                                         <button
@@ -229,26 +229,26 @@ export default function CreateUserPage() {
                                             {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                                         </button>
                                     </div>
-                                    {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+                                    {errors.confirmPassword && <p className="mt-2 text-[10px] text-danger font-bold uppercase tracking-widest">{errors.confirmPassword}</p>}
                                 </div>
 
                                 {/* Submit Button */}
-                                <div className="flex items-center justify-end space-x-3 pt-4">
+                                <div className="flex items-center justify-end space-x-4 pt-8 border-t border-border mt-8">
                                     <button
                                         type="button"
                                         onClick={() => router.push('/settings')}
-                                        className="px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                                        className="px-8 py-2.5 text-xs font-semibold text-slate-500 hover:text-[#1A1A1A] transition-all"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
                                         disabled={loading || success}
-                                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                                        className="px-10 py-2.5 bg-[#0066FF] hover:bg-[#0052cc] text-white text-xs font-bold rounded-lg transition-all shadow-lg shadow-blue-500/10 disabled:opacity-30 flex items-center"
                                     >
                                         {loading ? (
                                             <>
-                                                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                                                <Loader2 className="h-3 w-3 animate-spin mr-2" />
                                                 Creating...
                                             </>
                                         ) : (
