@@ -32,7 +32,10 @@ api.interceptors.response.use(
         const originalRequest = error.config;
 
         // If error is 401 and we haven't tried to refresh yet
-        if (error.response?.status === 401 && !originalRequest._retry) {
+        // Also skip redirect for login and register endpoints to avoid "weird reloads" on failed auth
+        const isAuthRequest = originalRequest.url?.includes('/auth/login') || originalRequest.url?.includes('/auth/register');
+
+        if (error.response?.status === 401 && !originalRequest._retry && !isAuthRequest) {
             originalRequest._retry = true;
 
             try {

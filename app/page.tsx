@@ -228,40 +228,40 @@ export default function Dashboard() {
 
             {/* Pipeline Overview & Recent Leads */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-            {/* Mini Pipeline Overview */}
-            <div className="lg:col-span-2 glass-card p-8">
-              <div className="flex items-center justify-between mb-8">
-                <h3 className="text-sm font-bold text-[#1A1A1A]">Pipeline Distribution</h3>
-                <Link
-                  href="/pipeline"
-                  className="text-slate-500 hover:text-primary text-xs font-bold flex items-center transition-all"
-                >
-                  Full Board
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Link>
+              {/* Mini Pipeline Overview */}
+              <div className="lg:col-span-2 glass-card p-8">
+                <div className="flex items-center justify-between mb-8">
+                  <h3 className="text-sm font-bold text-[#1A1A1A]">Pipeline Distribution</h3>
+                  <Link
+                    href="/pipeline"
+                    className="text-slate-500 hover:text-primary text-xs font-bold flex items-center transition-all"
+                  >
+                    Full Board
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Link>
+                </div>
+                {pipelineLoading ? (
+                  <div className="text-center py-12 text-slate-500 text-xs font-semibold">
+                    Loading distribution...
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    {pipelineStages.map((stage, index) => (
+                      <div
+                        key={index}
+                        className="bg-slate-50 rounded-lg p-5 border border-border text-center hover:border-primary/30 transition-all"
+                      >
+                        <p className="text-xl font-bold text-[#1A1A1A] mb-1">
+                          {stage.count}
+                        </p>
+                        <p className="text-[10px] font-bold text-slate-500">
+                          {stage.name}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              {pipelineLoading ? (
-                <div className="text-center py-12 text-slate-500 text-xs font-semibold">
-                  Loading distribution...
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-                  {pipelineStages.map((stage, index) => (
-                    <div
-                      key={index}
-                      className="bg-slate-50 rounded-lg p-5 border border-border text-center hover:border-primary/30 transition-all"
-                    >
-                      <p className="text-xl font-bold text-[#1A1A1A] mb-1">
-                        {stage.count}
-                      </p>
-                      <p className="text-[10px] font-bold text-slate-500">
-                        {stage.name}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
 
               {/* Recent Leads */}
               <div className="glass-card p-8">
@@ -288,10 +288,9 @@ export default function Dashboard() {
                               <p className="text-xs font-bold text-[#1A1A1A] truncate">{lead.name}</p>
                               <p className="text-[10px] text-slate-500 mt-1">{lead.phone || lead.email}</p>
                             </div>
-                            <span className={`ml-4 px-2.5 py-1 text-[10px] font-bold rounded-md ${
-                                lead.stage === 'Won' ? 'bg-success/10 text-success' :
+                            <span className={`ml-4 px-2.5 py-1 text-[10px] font-bold rounded-md ${lead.stage === 'Won' ? 'bg-success/10 text-success' :
                                 lead.stage === 'Lost' ? 'bg-danger/10 text-danger' :
-                                'bg-slate-200 text-slate-500'
+                                  'bg-slate-200 text-slate-500'
                               }`}>
                               {lead.stage}
                             </span>
@@ -335,10 +334,9 @@ export default function Dashboard() {
                           </div>
                           <div className="w-full bg-slate-100 rounded-full h-[4px]">
                             <div
-                              className={`h-full rounded-full transition-all duration-1000 ${
-                                metric.progress >= 90 ? 'bg-success' :
-                                metric.progress >= 70 ? 'bg-[#0066FF]' :
-                                'bg-slate-300'
+                              className={`h-full rounded-full transition-all duration-1000 ${metric.progress >= 90 ? 'bg-success' :
+                                  metric.progress >= 70 ? 'bg-[#0066FF]' :
+                                    'bg-slate-300'
                                 }`}
                               style={{ width: `${Math.min(metric.progress, 100)}%` }}
                             ></div>

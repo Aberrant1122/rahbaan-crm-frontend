@@ -115,10 +115,10 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
                         onClick={() => setShowStatusDropdown(!showStatusDropdown)}
                         disabled={isUpdating}
                         className={`flex items-center space-x-2 px-3.5 py-2 text-[10px] font-bold uppercase tracking-widest rounded-lg transition-all ${task.status === 'Completed'
-                                ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
-                                : task.status === 'In Progress'
-                                    ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
-                                    : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+                            ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
+                            : task.status === 'In Progress'
+                                ? 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+                                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                             } ${isUpdating ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                         {isUpdating ? (

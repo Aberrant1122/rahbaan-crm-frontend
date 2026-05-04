@@ -2,25 +2,31 @@
 
 :root {
   /* High-Contrast Professional Palette */
-  --background: #f8fafc; /* Slate 50 - softer than pure white */
-  --foreground: #0f172a; /* Slate 900 */
-  
+  --background: #f8fafc;
+  /* Slate 50 - softer than pure white */
+  --foreground: #0f172a;
+  /* Slate 900 */
+
   --surface-0: #ffffff;
-  --surface-1: #f1f5f9; /* Slate 100 */
-  --surface-2: #e2e8f0; /* Slate 200 */
-  --surface-3: #cbd5e1; /* Slate 300 */
-  
-  --primary: #2563eb; /* Modern Royal Blue */
+  --surface-1: #f1f5f9;
+  /* Slate 100 */
+  --surface-2: #e2e8f0;
+  /* Slate 200 */
+  --surface-3: #cbd5e1;
+  /* Slate 300 */
+
+  --primary: #2563eb;
+  /* Modern Royal Blue */
   --primary-hover: #1d4ed8;
   --primary-foreground: #ffffff;
-  
+
   --border: #e2e8f0;
   --border-strong: #cbd5e1;
-  
+
   --success: #10b981;
   --danger: #ef4444;
   --warning: #f59e0b;
-  
+
   /* Sidebar Specific */
   --sidebar-bg: #ffffff;
   --sidebar-foreground: #64748b;
@@ -36,15 +42,15 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   --color-surface-0: var(--surface-0);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
-  
+
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
-  
+
   --color-success: var(--success);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
@@ -89,7 +95,8 @@ body {
 /* Sidebar Nav Link */
 .sidebar-link-active {
   color: var(--primary) !important;
-  background: #f0f7ff; /* Very subtle blue tint */
+  background: #f0f7ff;
+  /* Very subtle blue tint */
   box-shadow: inset 4px 0 0 -2px var(--primary);
 }
 
@@ -113,8 +120,15 @@ body {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-in {
