@@ -5,13 +5,28 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export function formatDate(date: string | Date): string {
+export function formatDate(date: string | Date | null | undefined, includeTime: boolean = false): string {
+    if (!date) return 'N/A';
+    
     const d = typeof date === 'string' ? new Date(date) : date;
-    return new Intl.DateTimeFormat('en-US', {
+    
+    // Check if date is valid
+    if (isNaN(d.getTime())) {
+        return 'N/A';
+    }
+
+    const options: Intl.DateTimeFormatOptions = {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
-    }).format(d);
+    };
+
+    if (includeTime) {
+        options.hour = '2-digit';
+        options.minute = '2-digit';
+    }
+
+    return new Intl.DateTimeFormat('en-US', options).format(d);
 }
 
 export function formatCurrency(amount: number): string {

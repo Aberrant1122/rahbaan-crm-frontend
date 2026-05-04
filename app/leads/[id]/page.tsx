@@ -21,6 +21,7 @@ import MeetingScheduler from '@/components/MeetingScheduler';
 import { getLeadDetails, sendWhatsAppMessage, LeadDetails } from '../../services/leadsService';
 import { getTasks, Task } from '../../services/tasksService';
 import { createCalendarMeeting } from '../../services/calendarService';
+import { formatDate } from '@/lib/utils';
 
 export default function LeadDetailsPage() {
     const params = useParams();
@@ -115,15 +116,6 @@ export default function LeadDetailsPage() {
         }
     };
 
-    const formatDate = (dateString: string) => {
-        return new Date(dateString).toLocaleString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    };
 
     const getMessageStatusIcon = (status: string) => {
         switch (status) {
@@ -201,7 +193,7 @@ export default function LeadDetailsPage() {
                                         <div className="flex items-center text-sm">
                                             <Calendar className="h-4 w-4 text-slate-400 mr-3" />
                                             <span className="text-slate-700">
-                                                Created {formatDate(lead.created_at)}
+                                                Created {formatDate(lead.created_at, true)}
                                             </span>
                                         </div>
                                     </div>
@@ -293,7 +285,7 @@ export default function LeadDetailsPage() {
                                                     <div className="flex-1 min-w-0">
                                                         <p className="text-sm text-slate-900">{event.description}</p>
                                                         <p className="text-xs text-slate-500 mt-1">
-                                                            {formatDate(event.created_at)}
+                                                            {formatDate(event.created_at, true)}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -413,7 +405,7 @@ export default function LeadDetailsPage() {
                                                         <div className={`flex items-center justify-end space-x-2 mt-2 text-xs ${
                                                             msg.direction === 'outbound' ? 'text-indigo-100' : 'text-slate-500'
                                                         }`}>
-                                                            <span>{formatDate(msg.created_at)}</span>
+                                                            <span>{formatDate(msg.created_at, true)}</span>
                                                             {msg.direction === 'outbound' && getMessageStatusIcon(msg.status)}
                                                         </div>
                                                     </div>

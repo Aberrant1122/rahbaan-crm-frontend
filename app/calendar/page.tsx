@@ -26,11 +26,11 @@ import {
 import PrivateRoute from '../components/auth/PrivateRoute';
 import { 
     createCalendarMeeting, 
-    getMeetingsForDate, 
+    deleteCalendarMeeting, 
     getAllUpcomingMeetings,
-    deleteCalendarMeeting,
     CalendarMeeting 
 } from '../services/calendarService';
+import { formatDate as globalFormatDate } from '@/lib/utils';
 
 type ViewMode = 'month' | 'week' | 'day' | 'list';
 
@@ -148,19 +148,20 @@ export default function CalendarPage() {
 
     // Initial load - removed since we now initialize dates in the first useEffect
 
-    const formatTimeRange = (start: string, end: string) => {
+    const formatTimeRange = (start: string | null | undefined, end: string | null | undefined) => {
+        if (!start || !end) return 'N/A';
         const startDate = new Date(start);
         const endDate = new Date(end);
+        
+        if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+            return 'N/A';
+        }
+
         return `${startDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${endDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
     };
 
-    const formatDate = (date: Date) => {
-        return date.toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-        });
+    const formatDate = (date: Date | null | undefined) => {
+        return globalFormatDate(date);
     };
 
     const navigateDate = (direction: 'prev' | 'next') => {
