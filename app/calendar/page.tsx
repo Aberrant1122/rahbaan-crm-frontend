@@ -26,6 +26,7 @@ import {
 import PrivateRoute from '../components/auth/PrivateRoute';
 import { 
     createCalendarMeeting, 
+    getMeetingsForDate, 
     deleteCalendarMeeting, 
     getAllUpcomingMeetings,
     CalendarMeeting 

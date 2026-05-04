@@ -137,7 +137,7 @@ export default function TasksPage() {
                                                     id: task.id,
                                                     title: task.title,
                                                     description: task.description || '',
-                                                    dueDate: task.due_date || task.dueDate,
+                                                    dueDate: task.due_date || (task as any).dueDate,
                                                     priority: task.priority,
                                                     status: task.status,
                                                     leadId: task.lead_id || (task as any).leadId || 0,
