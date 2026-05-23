@@ -185,7 +185,7 @@ export default function LeadDetailsPage() {
                                                     <span className="text-slate-700">{lead.email}</span>
                                                 </div>
                                                 <button
-                                                    onClick={() => copyToClipboard(lead.email, 'email')}
+                                                    onClick={() => copyToClipboard(lead.email!, 'email')}
                                                     className="p-1 hover:bg-slate-100 rounded transition-colors opacity-0 group-hover:opacity-100"
                                                     title="Copy email"
                                                 >
