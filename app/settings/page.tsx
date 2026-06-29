@@ -34,7 +34,7 @@ export default function SettingsPage() {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="Control Panel" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 sm:p-6 lg:p-12">
                     <div className="max-w-4xl mx-auto">
                         {/* Security Card */}
                         <div className="mb-10">
@@ -73,8 +73,8 @@ export default function SettingsPage() {
                              </Link>
 
                              {/* Logout Section */}
-                             <div className="bg-white rounded-xl border border-danger/20 p-8 md:col-span-2 mt-4">
-                                 <div className="flex items-center justify-between">
+                             <div className="bg-white rounded-xl border border-danger/20 p-6 sm:p-8 md:col-span-2 mt-4">
+                                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
                                      <div>
                                          <div className="flex items-center space-x-4 mb-3">
                                              <div className="p-3 bg-danger/5 rounded-lg">

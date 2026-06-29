@@ -368,7 +368,7 @@ export default function CalendarPage() {
                 <div className="flex-1 flex flex-col overflow-hidden">
                     <Header title="Calendar" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-12">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-4 sm:p-6 lg:p-12">
                         {/* Google Connection Status */}
                         <div className="mb-6">
                             <GoogleConnectionStatus 
@@ -384,9 +384,9 @@ export default function CalendarPage() {
                         ) : (
                             <>
                                 {/* Calendar Header */}
-                                <div className="bg-white rounded-xl border border-border p-8 mb-8">
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center space-x-4">
+                                <div className="bg-white rounded-xl border border-border p-4 sm:p-8 mb-8">
+                            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between mb-4">
+                                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                                     <div className="flex items-center space-x-2">
                                         <button
                                             onClick={() => navigateDate('prev')}
@@ -420,16 +420,16 @@ export default function CalendarPage() {
                                     </button>
                                 </div>
 
-                                <div className="flex items-center space-x-3">
+                                <div className="flex flex-wrap items-center gap-3">
                                     {/* Search */}
-                                    <div className="relative">
+                                    <div className="relative w-full sm:w-auto">
                                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                                         <input
                                             type="text"
                                             placeholder="Search schedule..."
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="pl-10 pr-4 py-2.5 text-xs font-medium search-input focus:bg-white w-64"
+                                            className="pl-10 pr-4 py-2.5 text-xs font-medium search-input focus:bg-white w-full sm:w-64"
                                         />
                                     </div>
 
@@ -466,7 +466,7 @@ export default function CalendarPage() {
                         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
                             {/* Calendar View */}
                             <div className="lg:col-span-3">
-                                <div className="bg-white rounded-lg border border-slate-200 p-6">
+                                <div className="bg-white rounded-lg border border-slate-200 p-3 sm:p-6">
                                     {viewMode === 'month' ? (
                                         <div>
                                             <h2 className="text-sm font-bold text-[#1A1A1A] mb-6 border-b border-slate-50 pb-4">
@@ -531,7 +531,7 @@ export default function CalendarPage() {
                                                                             </p>
                                                                         )}
                                                                         
-                                                                        <div className="flex items-center space-x-4 text-sm text-slate-500">
+                                                                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
                                                                             <div className="flex items-center">
                                                                                 <CalendarIcon className="h-4 w-4 mr-1" />
                                                                                 {meetingDate.toLocaleDateString('en-US', { 

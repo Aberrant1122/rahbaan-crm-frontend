@@ -159,7 +159,7 @@ export default function AddLeadPage() {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="Add New Lead" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 sm:p-6 lg:p-12">
                     <div className="max-w-4xl mx-auto">
                         {/* Back Button */}
                         <button
@@ -197,15 +197,15 @@ export default function AddLeadPage() {
 
                         {/* Form Card */}
                         <div className="glass-card overflow-hidden">
-                            <div className="border-b border-slate-50 px-8 py-6 bg-slate-50/30">
+                            <div className="border-b border-slate-50 px-5 sm:px-8 py-6 bg-slate-50/30">
                                 <h2 className="text-[11px] font-bold text-slate-900 uppercase tracking-widest">Lead Information</h2>
                                 <p className="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-widest">
                                     Enter the core details to initialize a new lead.
                                 </p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="p-8">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10 text-black">
+                            <form onSubmit={handleSubmit} className="p-5 sm:p-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 sm:gap-y-10 text-black">
                                     {/* Name */}
                                     <div>
                                         <label

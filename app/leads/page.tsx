@@ -5,7 +5,20 @@ import { Search, Filter, Plus, Loader2, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
+import CustomSelect from '@/components/CustomSelect';
 import { getLeads, Lead } from '../services/leadsService';
+
+const STAGE_OPTIONS = [
+    { value: 'all', label: 'Stage: All' },
+    { value: 'New', label: 'New' },
+    { value: 'Incoming', label: 'Incoming' },
+    { value: 'Contacted', label: 'Contacted' },
+    { value: 'Qualified', label: 'Qualified' },
+    { value: 'Proposal', label: 'Second Wing' },
+    { value: 'Second Wing', label: 'Second Wing' },
+    { value: 'Won', label: 'Won' },
+    { value: 'Lost', label: 'Lost' }
+];
 
 export default function LeadsPage() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -49,10 +62,10 @@ export default function LeadsPage() {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="Leads Directory" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 sm:p-6 lg:p-12">
                     {/* Filters and Actions */}
                     <div className="mb-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                        <div className="flex items-center space-x-4">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                             <div className="relative text-black">
                                 <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
                                 <input
@@ -60,24 +73,15 @@ export default function LeadsPage() {
                                     placeholder="Search leads..."
                                     value={searchQuery}
                                     onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="pl-10 pr-4 py-2.5 text-xs font-semibold search-input w-72"
+                                    className="pl-10 pr-4 py-2.5 text-xs font-semibold search-input w-full sm:w-72"
                                 />
                             </div>
-                            <select
+                            <CustomSelect
                                 value={filterStatus}
-                                onChange={(e) => setFilterStatus(e.target.value)}
-                                className="px-4 py-2.5 text-[11px] font-bold uppercase tracking-widest search-input bg-white appearance-none min-w-[160px]"
-                            >
-                                <option value="all">Stage: All</option>
-                                <option value="New">New</option>
-                                <option value="Incoming">Incoming</option>
-                                <option value="Contacted">Contacted</option>
-                                <option value="Qualified">Qualified</option>
-                                <option value="Proposal">Second Wing</option>
-                                <option value="Second Wing">Second Wing</option>
-                                <option value="Won">Won</option>
-                                <option value="Lost">Lost</option>
-                            </select>
+                                onChange={setFilterStatus}
+                                options={STAGE_OPTIONS}
+                                className="w-full sm:w-auto sm:min-w-[150px] max-w-full"
+                            />
                         </div>
                         <Link
                             href="/add-lead"

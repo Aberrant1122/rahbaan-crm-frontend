@@ -8,7 +8,30 @@ import Header from '@/components/Header';
 import PrivateRoute from '../components/auth/PrivateRoute';
 import TaskCard from '@/components/TaskCard';
 
+import CustomSelect from '@/components/CustomSelect';
 import { getTasks, Task } from '../services/tasksService';
+
+const STATUS_OPTIONS = [
+    { value: 'all', label: 'All Statuses' },
+    { value: 'Pending', label: 'Pending' },
+    { value: 'In Progress', label: 'In Progress' },
+    { value: 'Completed', label: 'Completed' }
+];
+
+const PRIORITY_OPTIONS = [
+    { value: 'all', label: 'All Priorities' },
+    { value: 'High', label: 'High Priority' },
+    { value: 'Medium', label: 'Medium/Mid' }, // Using 'Medium Priority' or similar
+    { value: 'Low', label: 'Low Priority' }
+];
+
+// Let's use the exact names from the original code
+const PRIORITY_OPTIONS_EXACT = [
+    { value: 'all', label: 'All Priorities' },
+    { value: 'High', label: 'High Priority' },
+    { value: 'Medium', label: 'Medium Priority' },
+    { value: 'Low', label: 'Low Priority' }
+];
 
 export default function TasksPage() {
     const router = useRouter();
@@ -51,53 +74,45 @@ export default function TasksPage() {
                 <div className="flex-1 flex flex-col overflow-hidden">
                     <Header title="Operational Tasks" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#F8FAFC] p-8 md:p-12">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#F8FAFC] p-4 sm:p-6 lg:p-12">
                         {/* Executive Filters and Actions */}
                         <div className="mb-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                            <div className="flex flex-wrap items-center gap-4">
+                            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-4">
                                 <div className="relative group">
-                                    <Search className="h-4 w-4 absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
+                                    <Search className="h-3.5 w-3.5 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
                                     <input
                                         type="text"
                                         placeholder="Search tasks..."
-                                        className="pl-12 pr-6 py-3 text-[14px] font-medium search-input w-full md:w-80 bg-white border-slate-200 focus:border-primary/30 transition-all rounded-xl shadow-sm"
+                                        className="pl-10 pr-4 py-2.5 text-xs font-semibold search-input w-full sm:w-72 bg-white border-slate-200 focus:border-primary/30 transition-all"
                                     />
                                 </div>
-                                <div className="flex items-center gap-3">
-                                    <select
+                                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                                    <CustomSelect
                                         value={filterStatus}
-                                        onChange={(e) => setFilterStatus(e.target.value)}
-                                        className="px-5 py-3 text-[13px] font-bold text-slate-700 bg-white border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all appearance-none cursor-pointer min-w-[170px] shadow-sm"
-                                    >
-                                        <option value="all">All Statuses</option>
-                                        <option value="Pending">Pending</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Completed">Completed</option>
-                                    </select>
-                                    <select
+                                        onChange={setFilterStatus}
+                                        options={STATUS_OPTIONS}
+                                        className="w-full sm:w-auto sm:min-w-[150px]"
+                                    />
+                                    <CustomSelect
                                         value={filterPriority}
-                                        onChange={(e) => setFilterPriority(e.target.value)}
-                                        className="px-5 py-3 text-[13px] font-bold text-slate-700 bg-white border border-slate-200 rounded-xl focus:ring-4 focus:ring-primary/5 transition-all appearance-none cursor-pointer min-w-[170px] shadow-sm"
-                                    >
-                                        <option value="all">All Priorities</option>
-                                        <option value="High">High Priority</option>
-                                        <option value="Medium">Medium Priority</option>
-                                        <option value="Low">Low Priority</option>
-                                    </select>
+                                        onChange={setFilterPriority}
+                                        options={PRIORITY_OPTIONS_EXACT}
+                                        className="w-full sm:w-auto sm:min-w-[150px]"
+                                    />
                                 </div>
                             </div>
-                            <button 
+                            <button
                                 onClick={() => router.push('/create-task')}
-                                className="flex items-center justify-center px-8 py-3.5 bg-primary text-white text-[13px] font-bold rounded-xl hover:bg-primary-hover transition-all shadow-xl shadow-blue-500/10 active:scale-95"
+                                className="flex items-center justify-center px-6 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20 active:scale-95"
                             >
-                                <Plus className="h-4.5 w-4.5 mr-2.5 stroke-[2.5px]" />
+                                <Plus className="h-4 w-4 mr-2 stroke-[2.5px]" />
                                 Create Task
                             </button>
                         </div>
 
                         {/* Task List Architecture */}
-                        <div className="premium-card p-8">
-                            <div className="flex items-center justify-between mb-8 px-2">
+                        <div className="premium-card p-4 sm:p-8">
+                            <div className="flex flex-wrap items-center justify-between gap-3 mb-8 px-2">
                                 <div className="flex items-center space-x-4">
                                     <h3 className="text-[15px] font-bold text-slate-900 tracking-tight">
                                         Backlog Overview

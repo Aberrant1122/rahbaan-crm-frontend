@@ -46,10 +46,19 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
     };
 
     return (
-        <div
-            className={`fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-100/50 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
-                } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 flex flex-col`}
-        >
+        <>
+            {/* Mobile backdrop */}
+            <div
+                onClick={onClose}
+                className={`fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}
+                aria-hidden="true"
+            />
+
+            <div
+                className={`fixed inset-y-0 left-0 z-50 w-64 max-w-[80%] bg-white border-r border-slate-100/50 shadow-[4px_0_24px_rgba(0,0,0,0.02)] transform ${isOpen ? 'translate-x-0' : '-translate-x-full'
+                    } transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0 lg:max-w-none flex flex-col`}
+            >
             <div className="flex items-center justify-between h-20 px-8 border-b border-slate-50">
                 <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20">
@@ -78,6 +87,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                         <Link
                             key={item.name}
                             href={item.href}
+                            onClick={onClose}
                             className={`flex items-center px-4 py-2.5 text-xs font-semibold rounded-xl transition-all duration-300 relative group ${active
                                 ? 'sidebar-link-active text-primary'
                                 : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
@@ -99,6 +109,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
                     <span className="text-[10px] font-bold uppercase tracking-widest">Active</span>
                 </div>
             </div>
-        </div>
+            </div>
+        </>
     );
 }

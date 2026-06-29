@@ -74,7 +74,7 @@ export default function AllUsersPage() {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="User Directory" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 sm:p-6 lg:p-12">
                     <div className="max-w-6xl mx-auto">
                         {/* Page Header */}
                          <div className="mb-10">

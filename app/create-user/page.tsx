@@ -99,7 +99,7 @@ export default function CreateUserPage() {
             <div className="flex-1 flex flex-col overflow-hidden">
                 <Header title="Create New User" onMenuClick={() => setSidebarOpen(true)} />
 
-                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-12">
+                <main className="flex-1 overflow-x-hidden overflow-y-auto bg-white p-4 sm:p-6 lg:p-12">
                     <div className="max-w-2xl mx-auto">
                         {/* Page Header */}
                         <div className="mb-10">

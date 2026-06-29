@@ -24,7 +24,14 @@ import {
 } from 'recharts';
 import Sidebar from '@/components/Sidebar';
 import Header from '@/components/Header';
+import CustomSelect from '@/components/CustomSelect';
 import analyticsService from '@/app/services/analyticsService';
+
+const PERIOD_OPTIONS = [
+  { value: '6', label: 'Last 6 Months' },
+  { value: '12', label: 'Last 12 Months' },
+  { value: '1', label: 'Last 30 Days' }
+];
 
 export default function Analytics() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -67,7 +74,7 @@ export default function Analytics() {
         <Header title="Analytics Dashboard" onMenuClick={() => setSidebarOpen(true)} />
 
         {/* Analytics content */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-12">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-background p-4 sm:p-6 lg:p-12">
           {loading && (
             <div className="flex justify-center items-center h-64">
               <div className="text-slate-600">Loading analytics data...</div>
@@ -83,18 +90,15 @@ export default function Analytics() {
           {!loading && !error && (
             <>
               {/* Date Range and Actions */}
-              <div className="mb-6 flex items-center justify-between">
+              <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="flex items-center space-x-2">
                   <Calendar className="h-4 w-4 text-slate-400" />
-                  <select
-                    className="px-4 py-2.5 text-xs font-semibold search-input bg-white appearance-none min-w-[180px]"
+                  <CustomSelect
+                    className="min-w-[180px]"
                     value={selectedPeriod}
-                    onChange={(e) => setSelectedPeriod(e.target.value)}
-                  >
-                    <option value="6">Last 6 Months</option>
-                    <option value="12">Last 12 Months</option>
-                    <option value="1">Last 30 Days</option>
-                  </select>
+                    onChange={setSelectedPeriod}
+                    options={PERIOD_OPTIONS}
+                  />
                 </div>
                 <div className="flex items-center space-x-3">
                   <button className="flex items-center px-6 py-2.5 bg-primary text-white text-xs font-bold rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20">

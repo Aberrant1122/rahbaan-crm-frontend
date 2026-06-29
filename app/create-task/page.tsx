@@ -128,7 +128,7 @@ function CreateTaskForm() {
                 <div className="flex-1 flex flex-col overflow-hidden">
                     <Header title="Create Operational Task" onMenuClick={() => setSidebarOpen(true)} />
 
-                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#F8FAFC] p-8 md:p-12">
+                    <main className="flex-1 overflow-x-hidden overflow-y-auto bg-[#F8FAFC] p-4 sm:p-6 lg:p-12">
                         <div className="max-w-4xl mx-auto">
                             <button
                                 onClick={() => router.back()}
@@ -160,7 +160,7 @@ function CreateTaskForm() {
                             )}
 
                             <div className="premium-card overflow-hidden">
-                                <div className="border-b border-slate-100 px-10 py-8 bg-slate-50/30">
+                                <div className="border-b border-slate-100 px-5 sm:px-10 py-6 sm:py-8 bg-slate-50/30">
                                     <h2 className="text-[16px] font-bold text-slate-900 tracking-tight">
                                         New Task Specifications
                                     </h2>
@@ -169,21 +169,21 @@ function CreateTaskForm() {
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="p-10">
+                                <form onSubmit={handleSubmit} className="p-5 sm:p-10">
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
                                         <div className="md:col-span-2">
-                                            <label className="block text-[13px] font-bold text-slate-700 mb-3">
+                                            <label className="block text-xs font-bold text-slate-700 mb-3">
                                                 Task Title <span className="text-rose-500">*</span>
                                             </label>
                                             <div className="relative group">
-                                                <FileText className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary transition-colors" />
+                                                <FileText className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary transition-colors" />
                                                 <input
                                                     type="text"
                                                     id="title"
                                                     name="title"
                                                     value={formData.title}
                                                     onChange={handleChange}
-                                                    className={`w-full pl-14 pr-6 py-3.5 text-[14px] font-medium transition-all rounded-xl border bg-white ${
+                                                    className={`w-full pl-12 pr-5 py-3 text-xs font-medium transition-all rounded-xl border bg-white ${
                                                         errors.title
                                                             ? 'border-rose-300 bg-rose-50 focus:ring-rose-100'
                                                             : 'border-slate-200 focus:border-primary/30'
@@ -200,7 +200,7 @@ function CreateTaskForm() {
                                         </div>
 
                                         <div className="md:col-span-2">
-                                            <label className="block text-[13px] font-bold text-slate-700 mb-3">
+                                            <label className="block text-xs font-bold text-slate-700 mb-3">
                                                 Description
                                             </label>
                                             <textarea
@@ -209,40 +209,40 @@ function CreateTaskForm() {
                                                 value={formData.description}
                                                 onChange={handleChange}
                                                 rows={5}
-                                                className="w-full px-6 py-4 text-[14px] font-medium border-slate-200 focus:border-primary/30 transition-all resize-none rounded-[18px] bg-white outline-none shadow-sm"
+                                                className="w-full px-5 py-3.5 text-xs font-medium border border-slate-200 focus:border-primary/30 transition-all resize-none rounded-[18px] bg-white outline-none shadow-sm"
                                                 placeholder="Provide detailed instructions or context..."
                                             />
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-[13px] font-bold text-slate-700">
+                                            <label className="block text-xs font-bold text-slate-700">
                                                 Target Deadline
                                             </label>
                                             <div className="relative group">
-                                                <Calendar className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary pointer-events-none" />
+                                                <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary pointer-events-none" />
                                                 <input
                                                     type="date"
                                                     id="due_date"
                                                     name="due_date"
                                                     value={formData.due_date}
                                                     onChange={handleChange}
-                                                    className="w-full pl-14 pr-6 py-3.5 text-[14px] font-medium border border-slate-200 rounded-xl focus:border-primary/30 bg-white shadow-sm"
+                                                    className="w-full pl-12 pr-5 py-3 text-xs font-medium border border-slate-200 rounded-xl focus:border-primary/30 bg-white shadow-sm"
                                                 />
                                             </div>
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-[13px] font-bold text-slate-700">
+                                            <label className="block text-xs font-bold text-slate-700">
                                                 Priority Tier
                                             </label>
                                             <div className="relative group">
-                                                <Tag className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary pointer-events-none" />
+                                                <Tag className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary pointer-events-none" />
                                                 <select
                                                     id="priority"
                                                     name="priority"
                                                     value={formData.priority}
                                                     onChange={handleChange}
-                                                    className="w-full pl-14 pr-6 py-3.5 text-[14px] font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
+                                                    className="w-full pl-12 pr-5 py-3 text-xs font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
                                                 >
                                                     {priorityOptions.map((option) => (
                                                         <option key={option} value={option}>
@@ -254,17 +254,17 @@ function CreateTaskForm() {
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-[13px] font-bold text-slate-700">
+                                            <label className="block text-xs font-bold text-slate-700">
                                                 Initial State
                                             </label>
                                             <div className="relative group">
-                                                <Activity className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary pointer-events-none" />
+                                                <Activity className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary pointer-events-none" />
                                                 <select
                                                     id="status"
                                                     name="status"
                                                     value={formData.status}
                                                     onChange={handleChange}
-                                                    className="w-full pl-14 pr-6 py-3.5 text-[14px] font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
+                                                    className="w-full pl-12 pr-5 py-3 text-xs font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
                                                 >
                                                     {statusOptions.map((option) => (
                                                         <option key={option} value={option}>
@@ -276,17 +276,17 @@ function CreateTaskForm() {
                                         </div>
 
                                         <div className="space-y-3">
-                                            <label className="block text-[13px] font-bold text-slate-700">
+                                            <label className="block text-xs font-bold text-slate-700">
                                                 Context (Lead Mapping)
                                             </label>
                                             <div className="relative group">
-                                                <User className="absolute left-5 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400 group-focus-within:text-primary pointer-events-none" />
+                                                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-primary pointer-events-none" />
                                                 <select
                                                     id="lead_id"
                                                     name="lead_id"
                                                     value={formData.lead_id}
                                                     onChange={handleChange}
-                                                    className="w-full pl-14 pr-6 py-3.5 text-[14px] font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
+                                                    className="w-full pl-12 pr-5 py-3 text-xs font-bold border border-slate-200 rounded-xl focus:border-primary/30 bg-white appearance-none cursor-pointer shadow-sm"
                                                     disabled={loadingLeads}
                                                 >
                                                     <option value="">No Active Lead Mapping</option>
@@ -300,19 +300,19 @@ function CreateTaskForm() {
                                         </div>
                                     </div>
 
-                                    <div className="flex items-center justify-end space-x-6 mt-16 pt-10 border-t border-slate-100">
+                                    <div className="flex items-center justify-end space-x-4 sm:space-x-6 mt-12 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-100">
                                         <button
                                             type="button"
                                             onClick={() => router.back()}
                                             disabled={loading}
-                                            className="px-8 py-3 text-[14px] font-bold text-slate-400 hover:text-slate-900 transition-all disabled:opacity-30"
+                                            className="px-6 py-2.5 text-xs font-bold text-slate-400 hover:text-slate-900 transition-all disabled:opacity-30"
                                         >
                                             Cancel
                                         </button>
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="px-10 py-3.5 text-[14px] font-bold text-white bg-primary rounded-xl hover:bg-primary-hover transition-all shadow-xl shadow-blue-500/10 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                                            className="px-8 py-2.5 text-xs font-bold text-white bg-primary rounded-xl hover:bg-primary-hover transition-all shadow-lg shadow-blue-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
                                         >
                                             {loading ? (
                                                 <>

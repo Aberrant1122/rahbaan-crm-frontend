@@ -63,8 +63,8 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
     const statusConfig = getStatusConfig(task.status);
 
     return (
-        <div className="flex items-center justify-between p-6 border border-slate-200/60 bg-white rounded-[20px] hover:border-primary/30 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 group">
-            <div className="flex items-center space-x-5 min-w-0 flex-1">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 sm:p-6 border border-slate-200/60 bg-white rounded-[20px] hover:border-primary/30 hover:shadow-xl hover:shadow-slate-200/20 transition-all duration-300 group">
+            <div className="flex items-center space-x-4 sm:space-x-5 min-w-0 flex-1">
                 <div className={`p-3.5 rounded-xl ${statusConfig.bg} transition-colors duration-300`}>
                     <statusConfig.icon className={`h-5 w-5 ${statusConfig.text} stroke-[2px]`} />
                 </div>
@@ -93,7 +93,7 @@ export default function TaskCard({ task, onStatusUpdate }: TaskCardProps) {
                 </div>
             </div>
 
-            <div className="flex items-center space-x-4 ml-6">
+            <div className="flex items-center space-x-4 ml-14 sm:ml-6 shrink-0">
                 <div className="relative" ref={dropdownRef}>
                     <button
                         onClick={() => setShowStatusDropdown(!showStatusDropdown)}
